@@ -1,0 +1,12 @@
+.header {
+  width: calc(100% - 200px * 2);
+  padding: 45px 0 41px;
+  border-bottom: 1px solid #545454;
+}
+
+.header__logo {
+  background: url('../../images/mesto_logo.svg') no-repeat;
+  background-size: contain;
+  width: 142px;
+  height: 33px;
+}

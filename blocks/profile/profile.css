@@ -1,0 +1,71 @@
+.profile {
+  max-width: 880px;
+  display: flex;
+  margin: 40px 0 50px;
+  align-items: center;
+}
+
+.profile__avatar {
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+}
+
+.profile__info {
+  display: grid;
+  grid-template-columns: max-content min-content;
+  margin-left: 30px;
+  gap: 16px 18px;
+}
+
+.profile__name {
+  font-size: 42px;
+  line-height: 48px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.profile__caption {
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: normal;
+  max-width: 336px;
+  margin: 0;
+}
+
+.profile__button {
+  background-position: 50%;
+  border: 1px solid #fff;
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+
+.profile__button:hover {
+  opacity: 0.6;
+  transition: 0.5s;
+}
+
+.profile__edit-button {
+  background-image: url('../../images/edit_pencil.svg');
+  background-size: 10px 10px;
+  width: 24px;
+  height: 24px;
+  grid-row: 1;
+  grid-column: 2;
+  align-self: center;
+}
+
+.profile__add-button {
+  align-self: flex-end;
+  justify-self: flex-end;
+  background-image: url('../../images/add_button.svg');
+  background-size: 22px 22px;
+  border-width: 2px;
+  width: 150px;
+  height: 50px;
+  margin: auto 0 auto auto;
+}
