@@ -10,11 +10,11 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <header class="header">
+    <header class="header page__content">
       <div class="header__logo"></div>
     </header>
     <main class="content">
-      <section class="profile">
+      <section class="profile content__section">
         <img src="./images/kusto_avatar.jpg" alt="аватар" class="profile__avatar" />
         <div class="profile__info">
           <h2 class="profile__name">Жак-Ив Кусто</h2>
@@ -23,8 +23,65 @@
         </div>
         <button class="profile__button profile__add-button"></button>
       </section>
-      <section class="photo-feed"></section>
+      <section class="photo-feed content__section">
+        <ul class="photo-feed__list">
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element1.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Карачаевск</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element2.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Гора Эльбрус</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element3.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Домбай</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element4.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Гора Эльбрус</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element5.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Домбай</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+          <li class="photo-feed__item">
+            <figure class="photo-card">
+              <img src="./images/image_element6.jpg" alt="" class="photo-card__image" />
+              <figcaption class="photo-card__caption">
+                <h2 class="photo-card__title">Карачаево-Ччччччч</h2>
+                <button class="photo-card__like-button"></button>
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+      </section>
     </main>
-    <footer class="footer"></footer>
+    <footer class="footer page__content"></footer>
   </body>
 </html>

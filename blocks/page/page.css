@@ -1,4 +1,6 @@
 .page {
+  display: flex;
+  justify-content: center;
   background-color: black;
   font-family: 'Inter', Arial, sans-serif;
   color: white;
@@ -7,4 +9,9 @@
   flex-direction: column;
   justify-content: center;
   margin: 0 auto;
+}
+
+.page__content {
+  margin: 0 auto;
+  width: calc(100% - 200px * 2);
 }

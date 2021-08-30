@@ -1,0 +1,17 @@
+.photo-feed {
+  width: calc(100% - 200px * 2);
+}
+
+.photo-feed__list {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(218px, 1fr));
+  gap: 20px 17px;
+  list-style: none;
+}
+
+.photo-feed__item {
+  border-radius: 10px;
+  overflow: hidden;
+}
