@@ -1,12 +1,8 @@
-.photo-feed {
-  width: calc(100% - 200px * 2);
-}
-
 .photo-feed__list {
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(3, minmax(218px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px 17px;
   list-style: none;
 }
@@ -14,4 +10,16 @@
 .photo-feed__item {
   border-radius: 10px;
   overflow: hidden;
+}
+
+@media screen and (max-width: 842px) {
+  .photo-feed__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 424px) {
+  .photo-feed__list {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }

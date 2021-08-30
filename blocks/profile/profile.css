@@ -63,9 +63,39 @@
   align-self: flex-end;
   justify-self: flex-end;
   background-image: url('../../images/add_button.svg');
-  background-size: 22px 22px;
+  background-size: 22px;
   border-width: 2px;
   width: 150px;
   height: 50px;
   margin: auto 0 auto auto;
+}
+
+@media screen and (max-width: 767px) {
+  .profile {
+    flex-direction: column;
+  }
+  .profile__info {
+    gap: 14px 10px;
+    margin: 0 auto;
+  }
+  .profile__name {
+    font-size: 27px;
+    line-height: 33px;
+  }
+  .profile__caption {
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .profile__edit-button {
+    background-size: 7.5px;
+    width: 18px;
+    height: 18px;
+  }
+  .profile__add-button {
+    background-size: 16px;
+    border-width: 2px;
+    width: 282px;
+    height: 50px;
+    margin: 36px auto 0;
+  }
 }

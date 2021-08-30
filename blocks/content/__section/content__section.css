@@ -1,4 +1,10 @@
 .content__section {
   margin: 0 auto;
-  width: calc(100% - 200px * 2);
+  width: 100%;
+}
+
+@media screen and (max-width: 1279px) {
+  .content__section {
+    width: calc(100% - 19px * 2);
+  }
 }
