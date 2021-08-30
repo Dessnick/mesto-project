@@ -85,5 +85,18 @@
     <footer class="footer page__content">
       <p class="footer_copyright">&copy; 2021 Mesto Russia</p>
     </footer>
+    <section class="popup popup_opened">
+      <div class="popup__container">
+        <form class="popup__form">
+          <button class="popup__button popup__button_close"></button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <fieldset class="popup__input-container">
+            <input type="text" class="popup__item" id="login" name="login" />
+            <input type="text" class="popup__item" id="caption" name="caption" />
+          </fieldset>
+          <button type="submit" class="popup__button popup__button_submit">Сохранить</button>
+        </form>
+      </div>
+    </section>
   </body>
 </html>
