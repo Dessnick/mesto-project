@@ -7,11 +7,6 @@
   list-style: none;
 }
 
-.photo-feed__item {
-  border-radius: 10px;
-  overflow: hidden;
-}
-
 @media screen and (max-width: 842px) {
   .photo-feed__list {
     grid-template-columns: repeat(2, 1fr);
