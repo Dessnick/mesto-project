@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 1279px) {
+@media screen and (max-width: 918px) {
   .content__section {
     width: calc(100% - 19px * 2);
   }

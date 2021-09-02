@@ -2,11 +2,13 @@
   font-size: 18px;
   line-height: 22px;
   font-weight: normal;
-  max-width: 336px;
   margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 918px) {
   .profile__caption {
     font-size: 14px;
     line-height: 17px;
