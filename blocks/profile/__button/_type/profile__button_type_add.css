@@ -9,11 +9,7 @@
   margin: auto 0 auto auto;
 }
 
-<<<<<<< HEAD:blocks/profile/__button/_type/profile__button_type_add.css
 @media screen and (max-width: 918px) {
-=======
-@media screen and (max-width: 767px) {
->>>>>>> 5c7ec1685dbf9b965909975e4b4bc9c0a82b483e:blocks/profile/__button/_add/profile__button_add.css
   .profile__button_type_add {
     background-size: 16px;
     border-width: 2px;
