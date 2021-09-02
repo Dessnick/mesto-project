@@ -8,7 +8,11 @@
   align-self: center;
 }
 
+<<<<<<< HEAD:blocks/profile/__button/_type/profile__button_type_edit.css
 @media screen and (max-width: 918px) {
+=======
+@media screen and (max-width: 767px) {
+>>>>>>> 5c7ec1685dbf9b965909975e4b4bc9c0a82b483e:blocks/profile/__button/_edit/profile__button_edit.css
   .profile__button_type_edit {
     background-size: 7.5px;
     width: 18px;
