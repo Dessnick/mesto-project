@@ -24,66 +24,7 @@
         <button class="profile__button profile__button_type_add" type="button"></button>
       </section>
       <section class="photo-feed content__section">
-        <ul class="photo-feed__list">
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img src="./images/image_element1.jpg" alt="Карачаевск" class="photo-card__image" />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Карачаевск</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img src="./images/image_element2.jpg" alt="Гора Эльбрус" class="photo-card__image" />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Гора Эльбрус</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img src="./images/image_element3.jpg" alt="Домбай" class="photo-card__image" />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Домбай</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img src="./images/image_element4.jpg" alt="Гора Эльбрус" class="photo-card__image" />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Гора Эльбрус</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img src="./images/image_element5.jpg" alt="Домбай" class="photo-card__image" />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Домбай</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-          <li class="photo-feed__item">
-            <article class="photo-card">
-              <img
-                src="./images/image_element6.jpg"
-                alt="Карачаево-Ччччччч"
-                class="photo-card__image"
-              />
-              <div class="photo-card__caption">
-                <h2 class="photo-card__title">Карачаево-Ччччччч</h2>
-                <button class="photo-card__like-button" type="button"></button>
-              </div>
-            </article>
-          </li>
-        </ul>
+        <ul class="photo-feed__list"></ul>
       </section>
     </main>
     <footer class="footer page__content">
@@ -102,6 +43,17 @@
         </form>
       </div>
     </div>
+    <template id="card-template">
+      <li class="photo-feed__item">
+        <article class="photo-card">
+          <img class="photo-card__image" />
+          <div class="photo-card__caption">
+            <h2 class="photo-card__title"></h2>
+            <button class="photo-card__like-button" type="button"></button>
+          </div>
+        </article>
+      </li>
+    </template>
     <script src="./scripts/script.js"></script>
   </body>
 </html>
