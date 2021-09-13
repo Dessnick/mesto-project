@@ -38,7 +38,7 @@ popupSaveButton.addEventListener('click', function () {
   closePopup();
 });
 
-function renderPage(_initialCards) {
+function renderPage() {
   const initialCards = [
     {
       name: 'Алтай',
