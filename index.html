@@ -30,7 +30,7 @@
     <footer class="footer page__content">
       <p class="footer__copyright">&copy; 2021 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_profile-edit">
       <div class="popup__container">
         <button class="popup__button popup__button_type_close" type="button"></button>
         <form class="popup__form" name="profile-edit">
@@ -38,6 +38,31 @@
           <fieldset class="popup__input-container">
             <input type="text" class="popup__item" id="login" name="login" placeholder="Имя" />
             <input type="text" class="popup__item" id="about" name="about" placeholder="О Себе" />
+          </fieldset>
+          <button class="popup__button popup__button_type_submit" type="submit">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_place-add">
+      <div class="popup__container">
+        <button class="popup__button popup__button_type_close" type="button"></button>
+        <form class="popup__form" name="profile-edit">
+          <h2 class="popup__heading">Новое место</h2>
+          <fieldset class="popup__input-container">
+            <input
+              type="text"
+              class="popup__item"
+              id="place-name"
+              name="place-name"
+              placeholder="Название"
+            />
+            <input
+              type="text"
+              class="popup__item"
+              id="image-link"
+              name="image-link"
+              placeholder="Ссылка на картинку"
+            />
           </fieldset>
           <button class="popup__button popup__button_type_submit" type="submit">Сохранить</button>
         </form>
