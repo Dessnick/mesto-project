@@ -92,6 +92,11 @@ function addPhotoCard(inputData) {
 
   photoCardElement.querySelector('.photo-card__title').textContent = inputData.placeNameInput;
 
+  const elementLikeButton = photoCardElement.querySelector('.photo-card__like-button');
+  elementLikeButton.addEventListener('click', () =>
+    elementLikeButton.classList.toggle('photo-card__like-button_active'),
+  );
+
   return photoCardElement;
 }
 
