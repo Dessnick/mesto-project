@@ -56,17 +56,17 @@ function loadProfileInfo() {
 }
 
 const editButton = document.querySelector('.profile__button_type_edit');
-editButton.addEventListener('click', function () {
+editButton.addEventListener('click', () => {
   openPopup(popupProfileEdit);
   loadProfileInfo();
 });
 
 const addButton = document.querySelector('.profile__button_type_add');
-addButton.addEventListener('click', function () {
+addButton.addEventListener('click', () => {
   openPopup(popupPlaceAdd);
 });
 
-popupProfileEdit.addEventListener('submit', function (evt) {
+popupProfileEdit.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const loginInput = popupProfileEdit.querySelector('#login').value;
@@ -105,7 +105,7 @@ function clearPopupAddInput() {
   popupPlaceAdd.querySelector('#image-link').value = '';
 }
 
-popupPlaceAdd.addEventListener('submit', function (evt) {
+popupPlaceAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
   const inputData = {
