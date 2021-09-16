@@ -113,6 +113,10 @@ popupPlaceAdd.addEventListener('submit', (evt) => {
     imageLinkInput: popupPlaceAdd.querySelector('#image-link').value,
   };
 
+  if (!inputData.placeNameInput || !inputData.imageLinkInput) {
+    return;
+  }
+
   document.querySelector('.photo-feed__list').prepend(addPhotoCard(inputData));
 
   //close
