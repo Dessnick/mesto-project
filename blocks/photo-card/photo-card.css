@@ -5,4 +5,5 @@
   display: grid;
   align-items: center;
   grid-template-rows: 282px 1fr;
+  position: relative;
 }

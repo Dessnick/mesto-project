@@ -23,6 +23,7 @@
 @import url('../blocks/photo-feed/__item/photo-feed__item.css');
 
 @import url('../blocks/photo-card/photo-card.css');
+@import url('../blocks/photo-card/__delete-button/photo-card__delete-button.css');
 @import url('../blocks/photo-card/__image/photo-card__image.css');
 @import url('../blocks/photo-card/__caption/photo-card__caption.css');
 @import url('../blocks/photo-card/__title/photo-card__title.css');
