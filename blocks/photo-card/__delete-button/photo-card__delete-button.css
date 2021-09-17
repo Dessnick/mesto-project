@@ -9,4 +9,15 @@
   right: 15px;
   background: transparent url('../../../images/button_trash.svg') no-repeat;
   background-size: cover;
+  opacity: 1;
+  display: none;
+}
+
+.photo-card__delete-button:hover {
+  opacity: 0.6;
+  transition: 0.5s;
+}
+
+.photo-card:hover .photo-card__delete-button {
+  display: block;
 }
