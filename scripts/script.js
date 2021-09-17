@@ -97,6 +97,11 @@ function addPhotoCard(inputData) {
     elementLikeButton.classList.toggle('photo-card__like-button_active'),
   );
 
+  const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
+  elementDeleteButton.addEventListener('click', (evt) =>
+    evt.target.closest('.photo-feed__item').remove(),
+  );
+
   return photoCardElement;
 }
 
