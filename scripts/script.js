@@ -28,6 +28,7 @@ const initialCards = [
 const popupBlock = document.querySelector('.popup');
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
+const popupShowImage = document.querySelector('.popup_type_show-image');
 
 function closePopupForm(evt) {
   const formPopup = evt.currentTarget.formPopup;
@@ -36,16 +37,12 @@ function closePopupForm(evt) {
   //++add removeEventListener for 'click' and 'keydown'
 }
 
-const popupCloseProfileEdit = popupProfileEdit.querySelector('.popup__button_type_close');
-popupCloseProfileEdit.addEventListener('click', closePopupForm);
-popupCloseProfileEdit.formPopup = popupProfileEdit;
-
-const popupClosePlaceAdd = popupPlaceAdd.querySelector('.popup__button_type_close');
-popupClosePlaceAdd.addEventListener('click', closePopupForm);
-popupClosePlaceAdd.formPopup = popupPlaceAdd;
-
 function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
+
+  const popupCloseButton = popupForm.querySelector('.popup__button_type_close');
+  popupCloseButton.addEventListener('click', closePopupForm);
+  popupCloseButton.formPopup = popupForm;
 }
 
 function loadProfileInfo() {
@@ -82,6 +79,15 @@ popupProfileEdit.addEventListener('submit', (evt) => {
   popupProfileEdit.classList.remove('popup_opened');
 });
 
+function displayImage(inputData) {
+  const popupImage = popupShowImage.querySelector('.popup__image');
+  popupImage.setAttribute('src', inputData.imageLinkInput);
+  popupImage.setAttribute('alt', inputData.placeNameInput);
+
+  const popupImageCaption = popupShowImage.querySelector('.popup__image-caption');
+  popupImageCaption.textContent = inputData.placeNameInput;
+}
+
 function addPhotoCard(inputData) {
   const photoCardTemplate = document.querySelector('#card-template').content;
   const photoCardElement = photoCardTemplate.querySelector('.photo-feed__item').cloneNode(true);
@@ -89,6 +95,10 @@ function addPhotoCard(inputData) {
   const elementImage = photoCardElement.querySelector('.photo-card__image');
   elementImage.setAttribute('src', inputData.imageLinkInput);
   elementImage.setAttribute('alt', inputData.placeNameInput);
+  elementImage.addEventListener('click', () => {
+    openPopup(popupShowImage);
+    displayImage(inputData);
+  });
 
   photoCardElement.querySelector('.photo-card__title').textContent = inputData.placeNameInput;
 
