@@ -1,6 +1,6 @@
 .popup {
   color: #000;
-  display: none;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -10,4 +10,7 @@
   left: 0;
   bottom: 0;
   right: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 500ms, opacity 500ms ease;
 }
