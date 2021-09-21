@@ -17,6 +17,7 @@
 - BEM
 - HTML
 - CSS
+- Javascipt
 - Figma
 
 **Ссылки**
