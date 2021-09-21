@@ -34,7 +34,7 @@ function closePopupForm(evt) {
   const formPopup = evt.currentTarget.formPopup;
   formPopup.classList.remove('popup_opened');
 
-  //++add removeEventListener for 'click' and 'keydown'
+  formPopup.removeEventListener('click', closePopupForm);
 }
 
 function openPopup(popupForm) {
@@ -134,7 +134,6 @@ popupPlaceAdd.addEventListener('submit', (evt) => {
 
   document.querySelector('.photo-feed__list').prepend(addPhotoCard(inputData));
 
-  //close
   popupPlaceAdd.classList.remove('popup_opened');
 });
 
