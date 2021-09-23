@@ -1,6 +1,7 @@
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupShowImage = document.querySelector('.popup_type_show-image');
+const photoFeed = document.querySelector('.photo-feed__list');
 
 function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
@@ -108,7 +109,7 @@ popupPlaceAdd.addEventListener('submit', (evt) => {
     return;
   }
 
-  document.querySelector('.photo-feed__list').prepend(createPhotoCard(inputData));
+  photoFeed.prepend(createPhotoCard(inputData));
 
   clearPopupAddInput();
   closePopup(popupPlaceAdd);
@@ -121,7 +122,7 @@ function renderPage(cards) {
       imageLinkInput: element.link,
     };
 
-    document.querySelector('.photo-feed__list').append(createPhotoCard(inputData));
+    photoFeed.append(createPhotoCard(inputData));
   });
 }
 
