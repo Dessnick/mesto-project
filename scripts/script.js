@@ -12,9 +12,6 @@ function clearPopupAddInput() {
 
 function closePopup(popupForm) {
   popupForm.classList.remove('popup_opened');
-  if (popupForm === popupPlaceAdd) {
-    clearPopupAddInput();
-  }
 }
 
 function setEventCloseButton(popupForm) {
@@ -100,6 +97,7 @@ function createPhotoCard(inputData) {
 
 popupPlaceAdd.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  clearPopupAddInput();
 
   const inputData = {
     placeNameInput: popupPlaceAdd.querySelector('#place-name').value,
