@@ -7,8 +7,7 @@ function openPopup(popupForm) {
 }
 
 function clearPopupAddInput() {
-  popupPlaceAdd.querySelector('#place-name').value = '';
-  popupPlaceAdd.querySelector('#image-link').value = '';
+  popupPlaceAdd.querySelector('.popup__form').reset();
 }
 
 function closePopup(popupForm) {
