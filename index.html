@@ -33,11 +33,35 @@
     <div class="popup popup_type_profile-edit">
       <div class="popup__container">
         <button class="popup__button popup__button_type_close" type="button"></button>
-        <form class="popup__form" name="profile-edit">
+        <form class="popup__form" name="profile-edit" novalidate>
           <h2 class="popup__heading">Редактировать профиль</h2>
           <fieldset class="popup__input-container">
-            <input type="text" class="popup__item" id="login" name="login" placeholder="Имя" />
-            <input type="text" class="popup__item" id="about" name="about" placeholder="О Себе" />
+            <label for="" class="popup__field">
+              <input
+                type="text"
+                class="popup__item"
+                id="login-input"
+                name="login"
+                placeholder="Имя"
+                required
+                minlength="2"
+                maxlength="40"
+              />
+              <span class="popup__item-error login-input-error"></span>
+            </label>
+            <label class="popup__field">
+              <input
+                type="text"
+                class="popup__item"
+                id="about-input"
+                name="about"
+                placeholder="О Себе"
+                required
+                minlength="2"
+                maxlength="200"
+              />
+              <span class="popup__item-error about-input-error"></span>
+            </label>
           </fieldset>
           <button class="popup__button popup__button_type_submit" type="submit">Сохранить</button>
         </form>
@@ -46,7 +70,7 @@
     <div class="popup popup_type_place-add">
       <div class="popup__container">
         <button class="popup__button popup__button_type_close" type="button"></button>
-        <form class="popup__form" name="profile-edit">
+        <form class="popup__form" name="place-add">
           <h2 class="popup__heading">Новое место</h2>
           <fieldset class="popup__input-container">
             <input

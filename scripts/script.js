@@ -3,6 +3,47 @@ const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
 
+function showInputError(popupForm, inputElement, errorMessage) {
+  const errorElement = popupForm.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__item_type_error');
+  errorElement.classList.add('popup__item-error_active');
+  errorElement.textContent = errorMessage;
+}
+
+function hideInputError(popupForm, inputElement) {
+  const errorElement = popupForm.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__item_type_error');
+  errorElement.classList.remove('popup__item-error_active');
+  errorElement.textContent = '';
+}
+
+function checkInputValidity(popupForm, inputElement) {
+  if (!inputElement.validity.valid) {
+    let errorMessage = inputElement.validationMessage;
+    if (!inputElement.value.length) {
+      errorMessage = 'Вы пропустили это поле';
+    }
+    showInputError(popupForm, inputElement, errorMessage);
+  } else {
+    hideInputError(popupForm, inputElement);
+  }
+}
+
+function setInputEventListeners(popupForm) {
+  const inputList = Array.from(popupForm.querySelectorAll('.popup__item'));
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', function () {
+      checkInputValidity(popupForm, inputElement);
+    });
+  });
+}
+
+function enableValidation() {
+  setInputEventListeners(popupProfileEdit);
+}
+
+enableValidation();
+
 function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
 }
@@ -29,8 +70,8 @@ setEventCloseButton(popupShowImage);
 function loadProfileInfo() {
   const profileName = document.querySelector('.profile__name');
   const profileAbout = document.querySelector('.profile__caption');
-  popupProfileEdit.querySelector('#login').value = profileName.textContent;
-  popupProfileEdit.querySelector('#about').value = profileAbout.textContent;
+  popupProfileEdit.querySelector('#login-input').value = profileName.textContent;
+  popupProfileEdit.querySelector('#about-input').value = profileAbout.textContent;
 }
 
 const editButton = document.querySelector('.profile__button_type_edit');
@@ -47,8 +88,8 @@ addButton.addEventListener('click', () => {
 popupProfileEdit.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const loginInput = popupProfileEdit.querySelector('#login').value;
-  const jobInput = popupProfileEdit.querySelector('#about').value;
+  const loginInput = popupProfileEdit.querySelector('#login-input').value;
+  const jobInput = popupProfileEdit.querySelector('#about-input').value;
 
   if (!loginInput || !jobInput) {
     return;
