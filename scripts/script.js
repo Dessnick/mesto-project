@@ -1,48 +1,9 @@
+import enableValidation from './components/validate.js';
+
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
-
-function showInputError(popupForm, inputElement, errorMessage) {
-  const errorElement = popupForm.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__item_type_error');
-  errorElement.classList.add('popup__item-error_active');
-  errorElement.textContent = errorMessage;
-}
-
-function hideInputError(popupForm, inputElement) {
-  const errorElement = popupForm.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__item_type_error');
-  errorElement.classList.remove('popup__item-error_active');
-  errorElement.textContent = '';
-}
-
-function checkInputValidity(popupForm, inputElement) {
-  if (!inputElement.validity.valid) {
-    let errorMessage = inputElement.validationMessage;
-    if (!inputElement.value.length) {
-      errorMessage = 'Вы пропустили это поле';
-    }
-    showInputError(popupForm, inputElement, errorMessage);
-  } else {
-    hideInputError(popupForm, inputElement);
-  }
-}
-
-function setInputEventListeners(popupForm) {
-  const inputList = Array.from(popupForm.querySelectorAll('.popup__item'));
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener('input', function () {
-      checkInputValidity(popupForm, inputElement);
-    });
-  });
-}
-
-function enableValidation() {
-  setInputEventListeners(popupProfileEdit);
-}
-
-enableValidation();
 
 function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
@@ -78,11 +39,13 @@ const editButton = document.querySelector('.profile__button_type_edit');
 editButton.addEventListener('click', () => {
   openPopup(popupProfileEdit);
   loadProfileInfo();
+  enableValidation();
 });
 
 const addButton = document.querySelector('.profile__button_type_add');
 addButton.addEventListener('click', () => {
   openPopup(popupPlaceAdd);
+  enableValidation();
 });
 
 popupProfileEdit.addEventListener('submit', (evt) => {
