@@ -1,3 +1,5 @@
+import enableValidation from './components/validate.js';
+
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupShowImage = document.querySelector('.popup_type_show-image');
@@ -29,26 +31,28 @@ setEventCloseButton(popupShowImage);
 function loadProfileInfo() {
   const profileName = document.querySelector('.profile__name');
   const profileAbout = document.querySelector('.profile__caption');
-  popupProfileEdit.querySelector('#login').value = profileName.textContent;
-  popupProfileEdit.querySelector('#about').value = profileAbout.textContent;
+  popupProfileEdit.querySelector('#login-input').value = profileName.textContent;
+  popupProfileEdit.querySelector('#about-input').value = profileAbout.textContent;
 }
 
 const editButton = document.querySelector('.profile__button_type_edit');
 editButton.addEventListener('click', () => {
   openPopup(popupProfileEdit);
   loadProfileInfo();
+  enableValidation();
 });
 
 const addButton = document.querySelector('.profile__button_type_add');
 addButton.addEventListener('click', () => {
   openPopup(popupPlaceAdd);
+  enableValidation();
 });
 
 popupProfileEdit.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const loginInput = popupProfileEdit.querySelector('#login').value;
-  const jobInput = popupProfileEdit.querySelector('#about').value;
+  const loginInput = popupProfileEdit.querySelector('#login-input').value;
+  const jobInput = popupProfileEdit.querySelector('#about-input').value;
 
   if (!loginInput || !jobInput) {
     return;
