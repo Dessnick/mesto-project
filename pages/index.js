@@ -1,4 +1,4 @@
-import enableValidation from './components/validate.js';
+import enableValidation from '../components/validate.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
