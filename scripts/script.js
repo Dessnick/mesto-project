@@ -5,21 +5,47 @@ const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
 
+function handleKeyEsc(evt) {
+  if (evt.key === 'Escape') {
+    const popupOpened = document.querySelector('.popup_opened');
+    closePopup(popupOpened);
+  }
+}
+
+function handleOverlayPopup(evt) {
+  if (evt.target.classList.contains('popup_opened')) {
+    closePopup(evt.target);
+  }
+}
+
+function setCloseHandlers(popupForm) {
+  document.addEventListener('keydown', handleKeyEsc);
+  popupForm.addEventListener('click', handleOverlayPopup);
+}
+
+function removeCloseHandlers(popupForm) {
+  document.removeEventListener('keydown', handleKeyEsc);
+  popupForm.removeEventListener('click', handleOverlayPopup);
+}
+
 function openPopup(popupForm) {
   popupForm.classList.add('popup_opened');
+  setCloseHandlers(popupForm);
+}
+
+function closePopup(popupForm) {
+  popupForm.classList.remove('popup_opened');
+  removeCloseHandlers(popupForm);
 }
 
 function clearPopupAddInput() {
   popupPlaceAdd.querySelector('.popup__form').reset();
 }
 
-function closePopup(popupForm) {
-  popupForm.classList.remove('popup_opened');
-}
-
 function setEventCloseButton(popupForm) {
   const closeButton = popupForm.querySelector('.popup__button_type_close');
   closeButton.addEventListener('click', () => {
+    window.resetForm(popupForm);
     closePopup(popupForm);
   });
 }
@@ -131,3 +157,33 @@ function renderPage(cards) {
 }
 
 renderPage(initialCards);
+
+// function keyHandler(evt) {
+//   const popupList = Array.from(document.querySelectorAll('.popup'));
+//   popupList.forEach((popupForm) => {
+//     if (evt.key === 'Escape') {
+//       closePopup(popupForm);
+//     }
+//   });
+// }
+
+// function setMouseAndKeyboardListeners() {
+//   const popupList = Array.from(document.querySelectorAll('.popup'));
+//   popupList.forEach((popupForm) => {
+//     document.addEventListener('keydown', function (evt) {
+//       console.log(evt.key);
+//       if (evt.key === 'Escape') {
+//         closePopup(popupForm);
+//       }
+//     });
+//     // if (evt.key === 'Escape') {
+//     //   closePopup(popupForm);
+//     // }
+
+//     popupForm.addEventListener('click', function (evt) {
+//       console.log(evt.target);
+//     });
+//   });
+// }
+
+// setMouseAndKeyboardListeners();
