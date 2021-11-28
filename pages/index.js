@@ -1,4 +1,4 @@
-import enableValidation from './components/validate.js';
+import enableValidation from '../components/validate.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -157,33 +157,3 @@ function renderPage(cards) {
 }
 
 renderPage(initialCards);
-
-// function keyHandler(evt) {
-//   const popupList = Array.from(document.querySelectorAll('.popup'));
-//   popupList.forEach((popupForm) => {
-//     if (evt.key === 'Escape') {
-//       closePopup(popupForm);
-//     }
-//   });
-// }
-
-// function setMouseAndKeyboardListeners() {
-//   const popupList = Array.from(document.querySelectorAll('.popup'));
-//   popupList.forEach((popupForm) => {
-//     document.addEventListener('keydown', function (evt) {
-//       console.log(evt.key);
-//       if (evt.key === 'Escape') {
-//         closePopup(popupForm);
-//       }
-//     });
-//     // if (evt.key === 'Escape') {
-//     //   closePopup(popupForm);
-//     // }
-
-//     popupForm.addEventListener('click', function (evt) {
-//       console.log(evt.target);
-//     });
-//   });
-// }
-
-// setMouseAndKeyboardListeners();
