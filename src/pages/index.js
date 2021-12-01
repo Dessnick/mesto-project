@@ -2,7 +2,7 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderPage, addPhotoCard } from '../components/card.js';
-import { initialCards } from '../components/initial_cards.js';
+import { initialCards } from '../components/initialCards.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -41,7 +41,7 @@ function setSubmitPopupProfileEdit(evt) {
   profileCaption.textContent = aboutValue;
 
   formProfileEdit.reset();
-  closePopup(popupProfileEdit);
+  closePopup();
 }
 
 function setSubmitPopupPlaceAdd(evt) {
@@ -59,7 +59,7 @@ function setSubmitPopupPlaceAdd(evt) {
   addPhotoCard(inputData);
 
   formPlaceAdd.reset();
-  closePopup(popupPlaceAdd);
+  closePopup();
 }
 
 function loadProfileInfo() {
@@ -73,7 +73,6 @@ function setOnCLickEditButton() {
 
   resetValidation(inputList, formProfileEdit, validationSelectors);
   openPopup(popupProfileEdit);
-  enableValidation(validationSelectors);
 }
 
 function setOnClickAddButton() {
@@ -81,7 +80,6 @@ function setOnClickAddButton() {
 
   resetValidation(inputList, formPlaceAdd, validationSelectors);
   openPopup(popupPlaceAdd);
-  enableValidation(validationSelectors);
 }
 
 popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
@@ -92,8 +90,7 @@ addButton.addEventListener('click', setOnClickAddButton);
 
 closeButtonList.forEach((buttonElement) => {
   buttonElement.addEventListener('click', () => {
-    closePopup(popupProfileEdit);
-    closePopup(popupPlaceAdd);
+    closePopup();
   });
 });
 

@@ -1,13 +1,12 @@
 function handleKeyEsc(evt) {
   if (evt.key === 'Escape') {
-    const popupOpened = document.querySelector('.popup_opened');
-    closePopup(popupOpened);
+    closePopup();
   }
 }
 
 function handleOverlayPopup(evt) {
   if (evt.target.classList.contains('popup_opened')) {
-    closePopup(evt.target);
+    closePopup();
   }
 }
 
@@ -26,8 +25,8 @@ function openPopup(popupForm) {
   setCloseHandlers(popupForm);
 }
 
-function closePopup(popupForm) {
-  popupForm.classList.remove('popup_opened');
+function closePopup() {
+  document.querySelector('.popup_opened').classList.remove('popup_opened');
   removeCloseHandlers(popupForm);
 }
 
