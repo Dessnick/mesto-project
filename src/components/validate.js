@@ -16,7 +16,7 @@ function hideInputError(popupForm, inputElement, selectors) {
   errorElement.textContent = '';
 }
 
-function checkInputValidity(popupForm, inputElement) {
+function checkInputValidity(popupForm, inputElement, selectors) {
   if (!inputElement.validity.valid) {
     let errorMessage = inputElement.validationMessage;
     if (!inputElement.value.length) {
@@ -63,8 +63,10 @@ function setEventListeners(formElement, selectors) {
 function resetValidation(inputList, popupForm, selectors) {
   inputList.forEach((inputElement) => {
     hideInputError(popupForm, inputElement, selectors);
-    popupForm.reset();
   });
+
+  const buttonSubmit = popupForm.querySelector(selectors.submitButtonSelector);
+  toggleButtonState(inputList, buttonSubmit, selectors);
 }
 
 function enableValidation(selectors) {
