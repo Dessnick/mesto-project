@@ -40,7 +40,7 @@ function setSubmitPopupProfileEdit(evt) {
   profileCaption.textContent = aboutValue;
 
   formProfileEdit.reset();
-  closePopup(popupProfileEdit);
+  closePopup();
 }
 
 function setSubmitPopupPlaceAdd(evt) {
@@ -58,7 +58,7 @@ function setSubmitPopupPlaceAdd(evt) {
   addPhotoCard(inputData);
 
   formPlaceAdd.reset();
-  closePopup(popupPlaceAdd);
+  closePopup();
 }
 
 function loadProfileInfo() {
