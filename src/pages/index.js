@@ -2,7 +2,7 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderPage, addPhotoCard } from '../components/card.js';
-import { initialCards } from '../components/initial_cards.js';
+import { initialCards } from '../components/initialCards.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -12,7 +12,6 @@ const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
 const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
 const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
-const closeButtonList = Array.from(document.querySelectorAll('.popup__button_type_close'));
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
 const placeName = popupPlaceAdd.querySelector('#place-name-input');
@@ -73,7 +72,6 @@ function setOnCLickEditButton() {
 
   resetValidation(inputList, formProfileEdit, validationSelectors);
   openPopup(popupProfileEdit);
-  enableValidation(validationSelectors);
 }
 
 function setOnClickAddButton() {
@@ -81,7 +79,17 @@ function setOnClickAddButton() {
 
   resetValidation(inputList, formPlaceAdd, validationSelectors);
   openPopup(popupPlaceAdd);
-  enableValidation(validationSelectors);
+}
+
+function handleCloseButton() {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach((popupElement) => {
+    popupElement.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup__button_type_close')) {
+        closePopup(popupElement);
+      }
+    });
+  });
 }
 
 popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
@@ -89,14 +97,7 @@ popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
 
 editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
-
-closeButtonList.forEach((buttonElement) => {
-  buttonElement.addEventListener('click', () => {
-    closePopup(popupProfileEdit);
-    closePopup(popupPlaceAdd);
-  });
-});
+handleCloseButton();
 
 renderPage(initialCards);
-
 enableValidation(validationSelectors);
