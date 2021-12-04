@@ -60,6 +60,10 @@ function addPhotoCard(inputData) {
 }
 
 function renderCards(cards, userData) {
+<<<<<<< HEAD
+=======
+  console.log(cards);
+>>>>>>> 65ce9fda73285cc3d37bb83e4fb149de30107e62
   cards.forEach((element) => {
     const cardData = {
       placeNameInput: element.name,
@@ -68,6 +72,10 @@ function renderCards(cards, userData) {
       owner: element.owner,
     };
     const inputData = [cardData, userData];
+<<<<<<< HEAD
+=======
+    console.log(inputData);
+>>>>>>> 65ce9fda73285cc3d37bb83e4fb149de30107e62
     photoFeed.append(createPhotoCard(inputData));
   });
 }
