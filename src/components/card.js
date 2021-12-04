@@ -3,8 +3,6 @@ import { openPopup } from './modal.js';
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
 
-// setEventCloseButton(popupShowImage);
-
 function displayImage(inputData) {
   const popupImage = popupShowImage.querySelector('.popup__image');
   popupImage.src = inputData.imageLinkInput;
@@ -45,7 +43,7 @@ function addPhotoCard(inputData) {
   photoFeed.prepend(createPhotoCard(inputData));
 }
 
-function renderPage(cards) {
+function renderCards(cards) {
   cards.forEach((element) => {
     const inputData = {
       placeNameInput: element.name,
@@ -56,4 +54,4 @@ function renderPage(cards) {
   });
 }
 
-export { addPhotoCard, renderPage };
+export { addPhotoCard, renderCards };

@@ -1,9 +1,9 @@
 import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
-import { renderPage, addPhotoCard } from '../components/card.js';
+import { renderCards, addPhotoCard } from '../components/card.js';
 import { initialCards } from '../components/initialCards.js';
-import { getCards, getProfile } from '../components/api.js';
+import { getCards, getProfile, promises } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -62,9 +62,17 @@ function setSubmitPopupPlaceAdd(evt) {
   closePopup(popupPlaceAdd);
 }
 
+function testPromise() {
+  Promise.all(promises).then(([profileInfo, cards]) => {
+    renderCards(cards);
+  });
+}
+
+testPromise();
+
 function loadProfileInfo() {
-  loginInput.value = profileName.textContent;
-  aboutInput.value = profileCaption.textContent;
+  // loginInput.value = profileName.textContent;
+  // aboutInput.value = profileCaption.textContent;
 }
 
 function setOnCLickEditButton() {
@@ -100,8 +108,5 @@ editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
 handleCloseButton();
 
-renderPage(initialCards);
+// renderCards(initialCards);
 enableValidation(validationSelectors);
-
-getCards();
-getProfile();
