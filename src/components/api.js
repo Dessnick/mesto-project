@@ -1,5 +1,5 @@
 const fetchInit = {
-  url: 'https://nomoreparties.co/v1/plus-cohort-4',
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
   headers: {
     authorization: '516b48a6-c50b-43c5-aac7-85b1d4cfb698',
     'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ function getErrorResponse(err) {
 }
 
 function getCards() {
-  return fetch(`${fetchInit.url}/cards`, {
+  return fetch(`${fetchInit.baseUrl}/cards`, {
     headers: fetchInit.headers,
   })
     .then(getResponseResult)
@@ -26,8 +26,21 @@ function getCards() {
 }
 
 function getProfile() {
-  return fetch(`${fetchInit.url}/users/me`, {
+  return fetch(`${fetchInit.baseUrl}/users/me`, {
     headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function pushProfileData(data) {
+  return fetch(`${fetchInit.baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: fetchInit.headers,
+    body: JSON.stringify({
+      name: data.name,
+      about: data.about,
+    }),
   })
     .then(getResponseResult)
     .catch(getErrorResponse);
@@ -35,4 +48,4 @@ function getProfile() {
 
 const promisesData = [getProfile(), getCards()];
 
-export { promisesData };
+export { promisesData, pushProfileData };

@@ -2,8 +2,7 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
-import { initialCards } from '../components/initialCards.js';
-import { promisesData } from '../components/api.js';
+import { promisesData, pushProfileData } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -37,6 +36,8 @@ function setSubmitPopupProfileEdit(evt) {
   if (!loginValue || !aboutValue) {
     return;
   }
+
+  pushProfileData({ name: loginValue, about: aboutValue });
 
   profileName.textContent = loginValue;
   profileCaption.textContent = aboutValue;
