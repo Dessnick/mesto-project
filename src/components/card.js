@@ -19,6 +19,7 @@ function createPhotoCard(inputData) {
   const elementImage = photoCardElement.querySelector('.photo-card__image');
   elementImage.src = inputData.imageLinkInput;
   elementImage.alt = inputData.placeNameInput;
+
   elementImage.addEventListener('click', () => {
     openPopup(popupShowImage);
     displayImage(inputData);
@@ -30,6 +31,8 @@ function createPhotoCard(inputData) {
   elementLikeButton.addEventListener('click', () =>
     elementLikeButton.classList.toggle('photo-card__like-button_active'),
   );
+  const elementLikeCounter = photoCardElement.querySelector('.photo-card__like-counter');
+  elementLikeCounter.textContent = inputData.likeCounterInput;
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
   elementDeleteButton.addEventListener('click', (evt) =>
@@ -44,10 +47,12 @@ function addPhotoCard(inputData) {
 }
 
 function renderCards(cards) {
+  console.log(cards);
   cards.forEach((element) => {
     const inputData = {
       placeNameInput: element.name,
       imageLinkInput: element.link,
+      likeCounterInput: element.likes.length,
     };
 
     photoFeed.append(createPhotoCard(inputData));
