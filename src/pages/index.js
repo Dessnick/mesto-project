@@ -3,10 +3,11 @@ import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
 import { initialCards } from '../components/initialCards.js';
-import { getCards, getProfile, promises } from '../components/api.js';
+import { promisesData } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
+const profileAvatar = document.querySelector('.profile__avatar');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const editButton = document.querySelector('.profile__button_type_edit');
@@ -61,18 +62,9 @@ function setSubmitPopupPlaceAdd(evt) {
   formPlaceAdd.reset();
   closePopup(popupPlaceAdd);
 }
-
-function testPromise() {
-  Promise.all(promises).then(([profileInfo, cards]) => {
-    renderCards(cards);
-  });
-}
-
-testPromise();
-
 function loadProfileInfo() {
-  // loginInput.value = profileName.textContent;
-  // aboutInput.value = profileCaption.textContent;
+  loginInput.value = profileName.textContent;
+  aboutInput.value = profileCaption.textContent;
 }
 
 function setOnCLickEditButton() {
@@ -108,5 +100,18 @@ editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
 handleCloseButton();
 
-// renderCards(initialCards);
+function renderProfileInfo(login, about, avatar) {
+  profileName.textContent = login;
+  profileCaption.textContent = about;
+  profileAvatar.src = avatar;
+}
+
+function renderPage() {
+  Promise.all(promisesData).then(([profileInfo, cards]) => {
+    renderProfileInfo(profileInfo.name, profileInfo.about, profileInfo.avatar);
+    renderCards(cards);
+  });
+}
+
+renderPage();
 enableValidation(validationSelectors);
