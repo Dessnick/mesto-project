@@ -12,32 +12,45 @@ function displayImage(inputData) {
   popupImageCaption.textContent = inputData.placeNameInput;
 }
 
+function userIsOwner(cardData, userData) {
+  if (cardData.owner._id !== userData._id) {
+    return false;
+  }
+  return true;
+}
+
 function createPhotoCard(inputData) {
+  const [cardData, userData] = inputData;
+
   const photoCardTemplate = document.querySelector('#card-template').content;
   const photoCardElement = photoCardTemplate.querySelector('.photo-feed__item').cloneNode(true);
 
   const elementImage = photoCardElement.querySelector('.photo-card__image');
-  elementImage.src = inputData.imageLinkInput;
-  elementImage.alt = inputData.placeNameInput;
+  elementImage.src = cardData.imageLinkInput;
+  elementImage.alt = cardData.placeNameInput;
 
   elementImage.addEventListener('click', () => {
     openPopup(popupShowImage);
-    displayImage(inputData);
+    displayImage(cardData);
   });
 
-  photoCardElement.querySelector('.photo-card__title').textContent = inputData.placeNameInput;
+  photoCardElement.querySelector('.photo-card__title').textContent = cardData.placeNameInput;
 
   const elementLikeButton = photoCardElement.querySelector('.photo-card__like-button');
   elementLikeButton.addEventListener('click', () =>
     elementLikeButton.classList.toggle('photo-card__like-button_active'),
   );
   const elementLikeCounter = photoCardElement.querySelector('.photo-card__like-counter');
-  elementLikeCounter.textContent = inputData.likeCounterInput;
+  elementLikeCounter.textContent = cardData.likeCounterInput;
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
-  elementDeleteButton.addEventListener('click', (evt) =>
-    evt.target.closest('.photo-feed__item').remove(),
-  );
+  if (userIsOwner(cardData, userData, elementDeleteButton)) {
+    elementDeleteButton.addEventListener('click', (evt) =>
+      evt.target.closest('.photo-feed__item').remove(),
+    );
+  } else {
+    elementDeleteButton.parentNode.removeChild(elementDeleteButton);
+  }
 
   return photoCardElement;
 }
@@ -46,15 +59,15 @@ function addPhotoCard(inputData) {
   photoFeed.prepend(createPhotoCard(inputData));
 }
 
-function renderCards(cards) {
-  console.log(cards);
+function renderCards(cards, userData) {
   cards.forEach((element) => {
-    const inputData = {
+    const cardData = {
       placeNameInput: element.name,
       imageLinkInput: element.link,
       likeCounterInput: element.likes.length,
+      owner: element.owner,
     };
-
+    const inputData = [cardData, userData];
     photoFeed.append(createPhotoCard(inputData));
   });
 }

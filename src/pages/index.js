@@ -110,7 +110,7 @@ function renderProfileInfo(login, about, avatar) {
 function renderPage() {
   Promise.all(promisesData).then(([profileInfo, cards]) => {
     renderProfileInfo(profileInfo.name, profileInfo.about, profileInfo.avatar);
-    renderCards(cards);
+    renderCards(cards, profileInfo);
   });
 }
 
