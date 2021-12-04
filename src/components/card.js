@@ -5,11 +5,11 @@ const photoFeed = document.querySelector('.photo-feed__list');
 
 function displayImage(inputData) {
   const popupImage = popupShowImage.querySelector('.popup__image');
-  popupImage.src = inputData.imageLinkInput;
-  popupImage.alt = inputData.placeNameInput;
+  popupImage.src = inputData.link;
+  popupImage.alt = inputData.name;
 
   const popupImageCaption = popupShowImage.querySelector('.popup__image-caption');
-  popupImageCaption.textContent = inputData.placeNameInput;
+  popupImageCaption.textContent = inputData.name;
 }
 
 function userIsOwner(cardData, userData) {
@@ -26,22 +26,22 @@ function createPhotoCard(inputData) {
   const photoCardElement = photoCardTemplate.querySelector('.photo-feed__item').cloneNode(true);
 
   const elementImage = photoCardElement.querySelector('.photo-card__image');
-  elementImage.src = cardData.imageLinkInput;
-  elementImage.alt = cardData.placeNameInput;
+  elementImage.src = cardData.link;
+  elementImage.alt = cardData.name;
 
   elementImage.addEventListener('click', () => {
     openPopup(popupShowImage);
     displayImage(cardData);
   });
 
-  photoCardElement.querySelector('.photo-card__title').textContent = cardData.placeNameInput;
+  photoCardElement.querySelector('.photo-card__title').textContent = cardData.name;
 
   const elementLikeButton = photoCardElement.querySelector('.photo-card__like-button');
   elementLikeButton.addEventListener('click', () =>
     elementLikeButton.classList.toggle('photo-card__like-button_active'),
   );
   const elementLikeCounter = photoCardElement.querySelector('.photo-card__like-counter');
-  elementLikeCounter.textContent = cardData.likeCounterInput;
+  elementLikeCounter.textContent = !cardData.likeCounterInput ? '' : cardData.likeCounterInput;
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
   if (userIsOwner(cardData, userData, elementDeleteButton)) {
@@ -60,22 +60,14 @@ function addPhotoCard(inputData) {
 }
 
 function renderCards(cards, userData) {
-<<<<<<< HEAD
-=======
-  console.log(cards);
->>>>>>> 65ce9fda73285cc3d37bb83e4fb149de30107e62
   cards.forEach((element) => {
     const cardData = {
-      placeNameInput: element.name,
-      imageLinkInput: element.link,
+      name: element.name,
+      link: element.link,
       likeCounterInput: element.likes.length,
       owner: element.owner,
     };
     const inputData = [cardData, userData];
-<<<<<<< HEAD
-=======
-    console.log(inputData);
->>>>>>> 65ce9fda73285cc3d37bb83e4fb149de30107e62
     photoFeed.append(createPhotoCard(inputData));
   });
 }

@@ -2,7 +2,7 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
-import { promisesData, pushProfileData } from '../components/api.js';
+import { promisesData, pushProfileData, pushCardData, deleteCard } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -13,6 +13,7 @@ const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
 const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
 const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
+const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
 const placeName = popupPlaceAdd.querySelector('#place-name-input');
@@ -26,6 +27,8 @@ const validationSelectors = {
   inputErrorClass: 'popup__item_type_error',
   errorClass: 'popup__item-error_active',
 };
+
+let userInfo;
 
 function setSubmitPopupProfileEdit(evt) {
   evt.preventDefault();
@@ -48,21 +51,27 @@ function setSubmitPopupProfileEdit(evt) {
 
 function setSubmitPopupPlaceAdd(evt) {
   evt.preventDefault();
+  saveButtonPlaceAdd.textContent = 'Добавляем...';
 
-  const inputData = {
-    placeNameInput: placeName.value,
-    imageLinkInput: imageLink.value,
+  const cardData = {
+    name: placeName.value,
+    link: imageLink.value,
   };
 
-  if (!inputData.placeNameInput || !inputData.imageLinkInput) {
+  if (!cardData.name || !cardData.link) {
     return;
   }
 
-  addPhotoCard(inputData);
-
-  formPlaceAdd.reset();
-  closePopup(popupPlaceAdd);
+  pushCardData(cardData)
+    .then((res) => {
+      addPhotoCard([res, userInfo]);
+      formPlaceAdd.reset();
+      closePopup(popupPlaceAdd);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (addSaveButton.textContent = 'Добавить'));
 }
+
 function loadProfileInfo() {
   loginInput.value = profileName.textContent;
   aboutInput.value = profileCaption.textContent;
@@ -108,9 +117,10 @@ function renderProfileInfo(login, about, avatar) {
 }
 
 function renderPage() {
-  Promise.all(promisesData).then(([profileInfo, cards]) => {
-    renderProfileInfo(profileInfo.name, profileInfo.about, profileInfo.avatar);
-    renderCards(cards, profileInfo);
+  Promise.all(promisesData).then(([userData, cards]) => {
+    userInfo = userData;
+    renderProfileInfo(userData.name, userData.about, userData.avatar);
+    renderCards(cards, userData);
   });
 }
 
