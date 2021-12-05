@@ -13,6 +13,7 @@ import {
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
 const popupAvatarEdit = document.querySelector('.popup_type_avatar-edit');
+const popupCardDelete = document.querySelector('.popup_type_card-delete');
 const profileAvatar = document.querySelector('.profile__avatar');
 const avatarButton = document.querySelector('.profile__button_type_avatar');
 const profileName = document.querySelector('.profile__name');
@@ -23,8 +24,9 @@ const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
 const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
 const formAvatarEdit = popupAvatarEdit.querySelector('.form-avatar-edit');
 const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
-const saveProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
-const saveAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
+const saveButtonProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
+const saveButtonAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
+const saveButtonCardDelete = popupCardDelete.querySelector('.popup__button_type_submit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
 const avatarLinkInput = popupAvatarEdit.querySelector('#avatar-link-input');
@@ -41,10 +43,12 @@ const validationSelectors = {
 };
 
 let userInfo;
+let cardToDelete;
+let cardIdToDelete;
 
 function setSubmitPopupProfileEdit(evt) {
   evt.preventDefault();
-  saveProfileEdit.textContent = 'Сохраняем...';
+  saveButtonProfileEdit.textContent = 'Сохраняем...';
 
   const loginValue = loginInput.value;
   const aboutValue = aboutInput.value;
@@ -62,7 +66,7 @@ function setSubmitPopupProfileEdit(evt) {
       closePopup(popupProfileEdit);
     })
     .catch((err) => console.log(err))
-    .finally(() => (saveProfileEdit.textContent = 'Сохранить'));
+    .finally(() => (saveButtonProfileEdit.textContent = 'Сохранить'));
 }
 
 function setSubmitPopupPlaceAdd(evt) {
@@ -90,7 +94,7 @@ function setSubmitPopupPlaceAdd(evt) {
 
 function setSubmitPopupAvatarEdit(evt) {
   evt.preventDefault();
-  saveAvatarEdit.textContent = 'Сохраняем...';
+  saveButtonAvatarEdit.textContent = 'Сохраняем...';
 
   updateProfileAvatar(avatarLinkInput.value)
     .then((res) => {
@@ -99,7 +103,20 @@ function setSubmitPopupAvatarEdit(evt) {
       closePopup(popupAvatarEdit);
     })
     .catch((err) => console.log(err))
-    .finally(() => (saveAvatarEdit.textContent = 'Сохранить'));
+    .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
+}
+
+function setSubmitPopupCardDelete(evt) {
+  evt.preventDefault();
+  saveButtonCardDelete.textContent = 'Удаляем...';
+
+  deleteCard(cardIdToDelete)
+    .then(() => {
+      cardToDelete.remove();
+      closePopup(popupCardDelete);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveButtonCardDelete.textContent = 'Да'));
 }
 
 function loadProfileInfo() {
@@ -134,6 +151,13 @@ function setOnClickEditAvatar() {
   openPopup(popupAvatarEdit);
 }
 
+export function setOnClickCardDeleteButton(evt) {
+  openPopup(popupCardDelete);
+
+  cardToDelete = evt.target.closest('.photo-feed__item');
+  cardIdToDelete = cardToDelete.getAttribute('card-id');
+}
+
 function handleCloseButton() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach((popupElement) => {
@@ -162,6 +186,7 @@ function renderPage() {
 popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
 popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
 popupAvatarEdit.addEventListener('submit', setSubmitPopupAvatarEdit);
+popupCardDelete.addEventListener('submit', setSubmitPopupCardDelete);
 
 editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
