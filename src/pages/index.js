@@ -6,7 +6,9 @@ import { promisesData, pushProfileData, pushCardData, deleteCard } from '../comp
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
+const popupAvatarEdit = document.querySelector('.popup_type_avatar-edit');
 const profileAvatar = document.querySelector('.profile__avatar');
+const avatarButton = document.querySelector('.profile__button_type_avatar');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const editButton = document.querySelector('.profile__button_type_edit');
@@ -16,6 +18,7 @@ const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
 const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
+const avatarLink = popupAvatarEdit.querySelector('#avatar-link-input');
 const placeName = popupPlaceAdd.querySelector('#place-name-input');
 const imageLink = popupPlaceAdd.querySelector('#image-link-input');
 
@@ -92,6 +95,15 @@ function setOnClickAddButton() {
   openPopup(popupPlaceAdd);
 }
 
+function loadProfileAvatar() {
+  avatarLink.value = profileAvatar.currentSrc;
+}
+
+function setOnClickEditAvatar() {
+  loadProfileAvatar();
+  openPopup(popupAvatarEdit);
+}
+
 function handleCloseButton() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach((popupElement) => {
@@ -122,6 +134,7 @@ popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
 
 editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
+avatarButton.addEventListener('click', setOnClickEditAvatar);
 handleCloseButton();
 
 renderPage();
