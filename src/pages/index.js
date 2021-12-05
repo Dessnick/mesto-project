@@ -103,13 +103,6 @@ function handleCloseButton() {
   });
 }
 
-popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
-popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
-
-editButton.addEventListener('click', setOnCLickEditButton);
-addButton.addEventListener('click', setOnClickAddButton);
-handleCloseButton();
-
 function renderProfileInfo(login, about, avatar) {
   profileName.textContent = login;
   profileCaption.textContent = about;
@@ -123,6 +116,13 @@ function renderPage() {
     renderCards(cards, userData);
   });
 }
+
+popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
+popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
+
+editButton.addEventListener('click', setOnCLickEditButton);
+addButton.addEventListener('click', setOnClickAddButton);
+handleCloseButton();
 
 renderPage();
 enableValidation(validationSelectors);

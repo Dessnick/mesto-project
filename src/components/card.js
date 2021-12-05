@@ -1,4 +1,5 @@
 import { openPopup } from './modal.js';
+import { deleteCard } from './api.js';
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
@@ -19,6 +20,10 @@ function userIsOwner(cardData, userData) {
   return true;
 }
 
+// function handleDeleteButton(evt) {
+//   evt.target.closest('.photo-feed__item').remove();
+// }
+
 function createPhotoCard(inputData) {
   const [cardData, userData] = inputData;
 
@@ -28,6 +33,7 @@ function createPhotoCard(inputData) {
   const elementImage = photoCardElement.querySelector('.photo-card__image');
   elementImage.src = cardData.link;
   elementImage.alt = cardData.name;
+  photoCardElement.setAttribute('card-id', cardData._id);
 
   elementImage.addEventListener('click', () => {
     openPopup(popupShowImage);
@@ -45,9 +51,13 @@ function createPhotoCard(inputData) {
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
   if (userIsOwner(cardData, userData, elementDeleteButton)) {
-    elementDeleteButton.addEventListener('click', (evt) =>
-      evt.target.closest('.photo-feed__item').remove(),
-    );
+    elementDeleteButton.addEventListener('click', (evt) => {
+      deleteCard(cardData._id)
+        .then(() => {
+          evt.target.closest('.photo-feed__item').remove();
+        })
+        .catch((err) => console.log(err));
+    });
   } else {
     elementDeleteButton.parentNode.removeChild(elementDeleteButton);
   }
@@ -62,6 +72,7 @@ function addPhotoCard(inputData) {
 function renderCards(cards, userData) {
   cards.forEach((element) => {
     const cardData = {
+      _id: element._id,
       name: element.name,
       link: element.link,
       likeCounterInput: element.likes.length,
