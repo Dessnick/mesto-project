@@ -1,5 +1,6 @@
 import { openPopup } from './modal.js';
 import { deleteCard, pushLikeData, deleteLikeData } from './api.js';
+import { setOnClickCardDeleteButton } from '../pages/index.js';
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const photoFeed = document.querySelector('.photo-feed__list');
@@ -49,6 +50,10 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
   }
 }
 
+function openPopupCardDelete(evt) {
+  setOnClickCardDeleteButton(evt);
+}
+
 function createPhotoCard(inputData) {
   const [cardData, userData] = inputData;
 
@@ -77,13 +82,7 @@ function createPhotoCard(inputData) {
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
   if (userIsOwner(cardData, userData, elementLikeButton)) {
-    elementDeleteButton.addEventListener('click', (evt) => {
-      deleteCard(cardData._id)
-        .then(() => {
-          evt.target.closest('.photo-feed__item').remove();
-        })
-        .catch((err) => console.log(err));
-    });
+    elementDeleteButton.addEventListener('click', (evt) => openPopupCardDelete(evt));
   } else {
     elementDeleteButton.parentNode.removeChild(elementDeleteButton);
   }
