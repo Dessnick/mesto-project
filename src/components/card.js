@@ -14,7 +14,7 @@ function displayImage(inputData) {
   popupImageCaption.textContent = inputData.name;
 }
 
-function userIsOwner(cardData, userData, elementLikeButton) {
+function userIsOwner(cardData, userData) {
   if (cardData.owner._id !== userData._id) {
     return false;
   }
@@ -77,7 +77,7 @@ function createPhotoCard(inputData) {
   );
 
   const elementDeleteButton = photoCardElement.querySelector('.photo-card__delete-button');
-  if (userIsOwner(cardData, userData, elementLikeButton)) {
+  if (userIsOwner(cardData, userData)) {
     elementDeleteButton.addEventListener('click', (evt) => setOnClickCardDeleteButton(evt));
   } else {
     elementDeleteButton.parentNode.removeChild(elementDeleteButton);
