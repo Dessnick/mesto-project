@@ -11,27 +11,31 @@ import {
 } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
+const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
+const saveButtonProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
+const loginInput = popupProfileEdit.querySelector('#login-input');
+const aboutInput = popupProfileEdit.querySelector('#about-input');
+
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
+const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
+const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
+const placeNameInput = popupPlaceAdd.querySelector('#place-name-input');
+const imageLinkInput = popupPlaceAdd.querySelector('#image-link-input');
+
 const popupAvatarEdit = document.querySelector('.popup_type_avatar-edit');
+const formAvatarEdit = popupAvatarEdit.querySelector('.form-avatar-edit');
+const saveButtonAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
+const avatarLinkInput = popupAvatarEdit.querySelector('#avatar-link-input');
+
 const popupCardDelete = document.querySelector('.popup_type_card-delete');
+const saveButtonCardDelete = popupCardDelete.querySelector('.popup__button_type_submit');
+
 const profileAvatar = document.querySelector('.profile__avatar');
 const avatarButton = document.querySelector('.profile__button_type_avatar');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
-const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
-const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
-const formAvatarEdit = popupAvatarEdit.querySelector('.form-avatar-edit');
-const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
-const saveButtonProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
-const saveButtonAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
-const saveButtonCardDelete = popupCardDelete.querySelector('.popup__button_type_submit');
-const loginInput = popupProfileEdit.querySelector('#login-input');
-const aboutInput = popupProfileEdit.querySelector('#about-input');
-const avatarLinkInput = popupAvatarEdit.querySelector('#avatar-link-input');
-const placeNameInput = popupPlaceAdd.querySelector('#place-name-input');
-const imageLinkInput = popupPlaceAdd.querySelector('#image-link-input');
 
 const validationSelectors = {
   formSelector: '.popup__form',
