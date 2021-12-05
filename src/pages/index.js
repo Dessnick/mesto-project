@@ -2,7 +2,13 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
-import { promisesData, pushProfileData, pushCardData, deleteCard } from '../components/api.js';
+import {
+  promisesData,
+  pushProfileData,
+  pushCardData,
+  deleteCard,
+  updateProfileAvatar,
+} from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
@@ -15,12 +21,15 @@ const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
 const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
 const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
+const formAvatarEdit = popupAvatarEdit.querySelector('.form-avatar-edit');
 const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
+const saveProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
+const saveAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
-const avatarLink = popupAvatarEdit.querySelector('#avatar-link-input');
-const placeName = popupPlaceAdd.querySelector('#place-name-input');
-const imageLink = popupPlaceAdd.querySelector('#image-link-input');
+const avatarLinkInput = popupAvatarEdit.querySelector('#avatar-link-input');
+const placeNameInput = popupPlaceAdd.querySelector('#place-name-input');
+const imageLinkInput = popupPlaceAdd.querySelector('#image-link-input');
 
 const validationSelectors = {
   formSelector: '.popup__form',
@@ -35,6 +44,7 @@ let userInfo;
 
 function setSubmitPopupProfileEdit(evt) {
   evt.preventDefault();
+  saveProfileEdit.textContent = 'Сохраняем...';
 
   const loginValue = loginInput.value;
   const aboutValue = aboutInput.value;
@@ -43,13 +53,16 @@ function setSubmitPopupProfileEdit(evt) {
     return;
   }
 
-  pushProfileData({ name: loginValue, about: aboutValue });
+  pushProfileData({ name: loginValue, about: aboutValue })
+    .then((res) => {
+      profileName.textContent = res.name;
+      profileCaption.textContent = res.about;
 
-  profileName.textContent = loginValue;
-  profileCaption.textContent = aboutValue;
-
-  formProfileEdit.reset();
-  closePopup(popupProfileEdit);
+      formProfileEdit.reset();
+      closePopup(popupProfileEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveProfileEdit.textContent = 'Сохранить'));
 }
 
 function setSubmitPopupPlaceAdd(evt) {
@@ -57,8 +70,8 @@ function setSubmitPopupPlaceAdd(evt) {
   saveButtonPlaceAdd.textContent = 'Добавляем...';
 
   const cardData = {
-    name: placeName.value,
-    link: imageLink.value,
+    name: placeNameInput.value,
+    link: imageLinkInput.value,
   };
 
   if (!cardData.name || !cardData.link) {
@@ -72,12 +85,30 @@ function setSubmitPopupPlaceAdd(evt) {
       closePopup(popupPlaceAdd);
     })
     .catch((err) => console.log(err))
-    .finally(() => (addSaveButton.textContent = 'Добавить'));
+    .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
+}
+
+function setSubmitPopupAvatarEdit(evt) {
+  evt.preventDefault();
+  saveAvatarEdit.textContent = 'Сохраняем...';
+
+  updateProfileAvatar(avatarLinkInput.value)
+    .then((res) => {
+      profileAvatar.src = res.avatar;
+      formAvatarEdit.reset();
+      closePopup(popupAvatarEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveAvatarEdit.textContent = 'Сохранить'));
 }
 
 function loadProfileInfo() {
   loginInput.value = profileName.textContent;
   aboutInput.value = profileCaption.textContent;
+}
+
+function loadProfileAvatar() {
+  avatarLinkInput.value = profileAvatar.currentSrc;
 }
 
 function setOnCLickEditButton() {
@@ -95,12 +126,11 @@ function setOnClickAddButton() {
   openPopup(popupPlaceAdd);
 }
 
-function loadProfileAvatar() {
-  avatarLink.value = profileAvatar.currentSrc;
-}
-
 function setOnClickEditAvatar() {
   loadProfileAvatar();
+  const inputList = Array.from(formAvatarEdit.querySelectorAll('.popup__item'));
+
+  resetValidation(inputList, formAvatarEdit, validationSelectors);
   openPopup(popupAvatarEdit);
 }
 
@@ -131,6 +161,7 @@ function renderPage() {
 
 popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
 popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
+popupAvatarEdit.addEventListener('submit', setSubmitPopupAvatarEdit);
 
 editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);

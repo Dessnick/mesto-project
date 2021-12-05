@@ -86,6 +86,24 @@ function deleteCard(id) {
     .catch(getErrorResponse);
 }
 
+function updateProfileAvatar(data) {
+  return fetch(`${fetchInit.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: fetchInit.headers,
+    body: JSON.stringify({ avatar: data }),
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
 const promisesData = [getProfile(), getCards()];
 
-export { promisesData, pushProfileData, pushCardData, deleteCard, pushLikeData, deleteLikeData };
+export {
+  promisesData,
+  pushProfileData,
+  pushCardData,
+  deleteCard,
+  pushLikeData,
+  deleteLikeData,
+  updateProfileAvatar,
+};
