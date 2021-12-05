@@ -2,21 +2,34 @@ import './index.css';
 import { resetValidation, enableValidation } from '../components/validate.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
-import { promisesData, pushProfileData } from '../components/api.js';
+import {
+  promisesData,
+  pushProfileData,
+  pushCardData,
+  deleteCard,
+  updateProfileAvatar,
+} from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const popupPlaceAdd = document.querySelector('.popup_type_place-add');
+const popupAvatarEdit = document.querySelector('.popup_type_avatar-edit');
 const profileAvatar = document.querySelector('.profile__avatar');
+const avatarButton = document.querySelector('.profile__button_type_avatar');
 const profileName = document.querySelector('.profile__name');
 const profileCaption = document.querySelector('.profile__caption');
 const editButton = document.querySelector('.profile__button_type_edit');
 const addButton = document.querySelector('.profile__button_type_add');
 const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
 const formPlaceAdd = popupPlaceAdd.querySelector('.form-place-add');
+const formAvatarEdit = popupAvatarEdit.querySelector('.form-avatar-edit');
+const saveButtonPlaceAdd = formPlaceAdd.querySelector('.popup__button_type_submit');
+const saveProfileEdit = formProfileEdit.querySelector('.popup__button_type_submit');
+const saveAvatarEdit = formAvatarEdit.querySelector('.popup__button_type_submit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
-const placeName = popupPlaceAdd.querySelector('#place-name-input');
-const imageLink = popupPlaceAdd.querySelector('#image-link-input');
+const avatarLinkInput = popupAvatarEdit.querySelector('#avatar-link-input');
+const placeNameInput = popupPlaceAdd.querySelector('#place-name-input');
+const imageLinkInput = popupPlaceAdd.querySelector('#image-link-input');
 
 const validationSelectors = {
   formSelector: '.popup__form',
@@ -27,8 +40,11 @@ const validationSelectors = {
   errorClass: 'popup__item-error_active',
 };
 
+let userInfo;
+
 function setSubmitPopupProfileEdit(evt) {
   evt.preventDefault();
+  saveProfileEdit.textContent = 'Сохраняем...';
 
   const loginValue = loginInput.value;
   const aboutValue = aboutInput.value;
@@ -37,35 +53,62 @@ function setSubmitPopupProfileEdit(evt) {
     return;
   }
 
-  pushProfileData({ name: loginValue, about: aboutValue });
+  pushProfileData({ name: loginValue, about: aboutValue })
+    .then((res) => {
+      profileName.textContent = res.name;
+      profileCaption.textContent = res.about;
 
-  profileName.textContent = loginValue;
-  profileCaption.textContent = aboutValue;
-
-  formProfileEdit.reset();
-  closePopup(popupProfileEdit);
+      formProfileEdit.reset();
+      closePopup(popupProfileEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveProfileEdit.textContent = 'Сохранить'));
 }
 
 function setSubmitPopupPlaceAdd(evt) {
   evt.preventDefault();
+  saveButtonPlaceAdd.textContent = 'Добавляем...';
 
-  const inputData = {
-    placeNameInput: placeName.value,
-    imageLinkInput: imageLink.value,
+  const cardData = {
+    name: placeNameInput.value,
+    link: imageLinkInput.value,
   };
 
-  if (!inputData.placeNameInput || !inputData.imageLinkInput) {
+  if (!cardData.name || !cardData.link) {
     return;
   }
 
-  addPhotoCard(inputData);
-
-  formPlaceAdd.reset();
-  closePopup(popupPlaceAdd);
+  pushCardData(cardData)
+    .then((res) => {
+      addPhotoCard([res, userInfo]);
+      formPlaceAdd.reset();
+      closePopup(popupPlaceAdd);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
 }
+
+function setSubmitPopupAvatarEdit(evt) {
+  evt.preventDefault();
+  saveAvatarEdit.textContent = 'Сохраняем...';
+
+  updateProfileAvatar(avatarLinkInput.value)
+    .then((res) => {
+      profileAvatar.src = res.avatar;
+      formAvatarEdit.reset();
+      closePopup(popupAvatarEdit);
+    })
+    .catch((err) => console.log(err))
+    .finally(() => (saveAvatarEdit.textContent = 'Сохранить'));
+}
+
 function loadProfileInfo() {
   loginInput.value = profileName.textContent;
   aboutInput.value = profileCaption.textContent;
+}
+
+function loadProfileAvatar() {
+  avatarLinkInput.value = profileAvatar.currentSrc;
 }
 
 function setOnCLickEditButton() {
@@ -83,6 +126,14 @@ function setOnClickAddButton() {
   openPopup(popupPlaceAdd);
 }
 
+function setOnClickEditAvatar() {
+  loadProfileAvatar();
+  const inputList = Array.from(formAvatarEdit.querySelectorAll('.popup__item'));
+
+  resetValidation(inputList, formAvatarEdit, validationSelectors);
+  openPopup(popupAvatarEdit);
+}
+
 function handleCloseButton() {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach((popupElement) => {
@@ -94,13 +145,6 @@ function handleCloseButton() {
   });
 }
 
-popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
-popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
-
-editButton.addEventListener('click', setOnCLickEditButton);
-addButton.addEventListener('click', setOnClickAddButton);
-handleCloseButton();
-
 function renderProfileInfo(login, about, avatar) {
   profileName.textContent = login;
   profileCaption.textContent = about;
@@ -108,11 +152,21 @@ function renderProfileInfo(login, about, avatar) {
 }
 
 function renderPage() {
-  Promise.all(promisesData).then(([profileInfo, cards]) => {
-    renderProfileInfo(profileInfo.name, profileInfo.about, profileInfo.avatar);
-    renderCards(cards, profileInfo);
+  Promise.all(promisesData).then(([userData, cards]) => {
+    userInfo = userData;
+    renderProfileInfo(userData.name, userData.about, userData.avatar);
+    renderCards(cards, userData);
   });
 }
+
+popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
+popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
+popupAvatarEdit.addEventListener('submit', setSubmitPopupAvatarEdit);
+
+editButton.addEventListener('click', setOnCLickEditButton);
+addButton.addEventListener('click', setOnClickAddButton);
+avatarButton.addEventListener('click', setOnClickEditAvatar);
+handleCloseButton();
 
 renderPage();
 enableValidation(validationSelectors);

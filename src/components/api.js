@@ -46,6 +46,64 @@ function pushProfileData(data) {
     .catch(getErrorResponse);
 }
 
+function pushCardData(data) {
+  return fetch(`${fetchInit.baseUrl}/cards`, {
+    method: 'POST',
+    headers: fetchInit.headers,
+    body: JSON.stringify({
+      name: data.name,
+      link: data.link,
+    }),
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function pushLikeData(id) {
+  return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
+    method: 'PUT',
+    headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function deleteLikeData(id) {
+  return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
+    method: 'DELETE',
+    headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function deleteCard(id) {
+  return fetch(`${fetchInit.baseUrl}/cards/${id}`, {
+    method: 'DELETE',
+    headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function updateProfileAvatar(data) {
+  return fetch(`${fetchInit.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: fetchInit.headers,
+    body: JSON.stringify({ avatar: data }),
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
 const promisesData = [getProfile(), getCards()];
 
-export { promisesData, pushProfileData };
+export {
+  promisesData,
+  pushProfileData,
+  pushCardData,
+  deleteCard,
+  pushLikeData,
+  deleteLikeData,
+  updateProfileAvatar,
+};
