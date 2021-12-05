@@ -59,6 +59,24 @@ function pushCardData(data) {
     .catch(getErrorResponse);
 }
 
+function pushLikeData(id) {
+  return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
+    method: 'PUT',
+    headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
+function deleteLikeData(id) {
+  return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
+    method: 'DELETE',
+    headers: fetchInit.headers,
+  })
+    .then(getResponseResult)
+    .catch(getErrorResponse);
+}
+
 function deleteCard(id) {
   return fetch(`${fetchInit.baseUrl}/cards/${id}`, {
     method: 'DELETE',
@@ -70,4 +88,4 @@ function deleteCard(id) {
 
 const promisesData = [getProfile(), getCards()];
 
-export { promisesData, pushProfileData, pushCardData, deleteCard };
+export { promisesData, pushProfileData, pushCardData, deleteCard, pushLikeData, deleteLikeData };
