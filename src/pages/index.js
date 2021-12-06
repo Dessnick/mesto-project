@@ -4,6 +4,7 @@ import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
 import {
   promisesData,
+  getErrorResponse,
   pushProfileData,
   pushCardData,
   deleteCard,
@@ -69,7 +70,7 @@ function setSubmitPopupProfileEdit(evt) {
       formProfileEdit.reset();
       closePopup(popupProfileEdit);
     })
-    .catch((err) => console.log(err))
+    .catch(getErrorResponse)
     .finally(() => (saveButtonProfileEdit.textContent = 'Сохранить'));
 }
 
@@ -92,7 +93,7 @@ function setSubmitPopupPlaceAdd(evt) {
       formPlaceAdd.reset();
       closePopup(popupPlaceAdd);
     })
-    .catch((err) => console.log(err))
+    .catch(getErrorResponse)
     .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
 }
 
@@ -106,7 +107,7 @@ function setSubmitPopupAvatarEdit(evt) {
       formAvatarEdit.reset();
       closePopup(popupAvatarEdit);
     })
-    .catch((err) => console.log(err))
+    .catch(getErrorResponse)
     .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
 }
 
@@ -119,7 +120,7 @@ function setSubmitPopupCardDelete(evt) {
       cardToDelete.remove();
       closePopup(popupCardDelete);
     })
-    .catch((err) => console.log(err))
+    .catch(getErrorResponse)
     .finally(() => (saveButtonCardDelete.textContent = 'Да'));
 }
 

@@ -20,17 +20,13 @@ function getErrorResponse(err) {
 function getCards() {
   return fetch(`${fetchInit.baseUrl}/cards`, {
     headers: fetchInit.headers,
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function getProfile() {
   return fetch(`${fetchInit.baseUrl}/users/me`, {
     headers: fetchInit.headers,
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function pushProfileData(data) {
@@ -41,9 +37,7 @@ function pushProfileData(data) {
       name: data.name,
       about: data.about,
     }),
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function pushCardData(data) {
@@ -54,36 +48,28 @@ function pushCardData(data) {
       name: data.name,
       link: data.link,
     }),
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function pushLikeData(id) {
   return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
     method: 'PUT',
     headers: fetchInit.headers,
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function deleteLikeData(id) {
   return fetch(`${fetchInit.baseUrl}/cards/likes/${id}`, {
     method: 'DELETE',
     headers: fetchInit.headers,
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function deleteCard(id) {
   return fetch(`${fetchInit.baseUrl}/cards/${id}`, {
     method: 'DELETE',
     headers: fetchInit.headers,
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 function updateProfileAvatar(data) {
@@ -91,15 +77,14 @@ function updateProfileAvatar(data) {
     method: 'PATCH',
     headers: fetchInit.headers,
     body: JSON.stringify({ avatar: data }),
-  })
-    .then(getResponseResult)
-    .catch(getErrorResponse);
+  }).then(getResponseResult);
 }
 
 const promisesData = [getProfile(), getCards()];
 
 export {
   promisesData,
+  getErrorResponse,
   pushProfileData,
   pushCardData,
   deleteCard,

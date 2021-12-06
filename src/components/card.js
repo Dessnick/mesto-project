@@ -1,12 +1,12 @@
 import { openPopup } from './modal.js';
-import { pushLikeData, deleteLikeData } from './api.js';
+import { getErrorResponse, pushLikeData, deleteLikeData } from './api.js';
 import { setOnClickCardDeleteButton } from '../pages/index.js';
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
+const popupImage = popupShowImage.querySelector('.popup__image');
 const photoFeed = document.querySelector('.photo-feed__list');
 
 function displayImage(inputData) {
-  const popupImage = popupShowImage.querySelector('.popup__image');
   popupImage.src = inputData.link;
   popupImage.alt = inputData.name;
 
@@ -34,19 +34,21 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
   const cardId = cardData._id;
 
   if (evt.target.classList.contains('photo-card__like-button_active')) {
-    deleteLikeData(cardId).then((res) => {
-      evt.target.classList.toggle('photo-card__like-button_active');
+    deleteLikeData(cardId)
+      .then((res) => {
+        evt.target.classList.toggle('photo-card__like-button_active');
 
-      const likesCount = res.likes.length;
-      elementLikeCounter.textContent = likesCount > 0 ? likesCount : '';
-    });
+        const likesCount = res.likes.length;
+        elementLikeCounter.textContent = likesCount > 0 ? likesCount : '';
+      })
+      .catch(getErrorResponse);
   } else {
     pushLikeData(cardId)
       .then((res) => {
         elementLikeCounter.textContent = res.likes.length;
         evt.target.classList.toggle('photo-card__like-button_active');
       })
-      .catch((err) => console.log(err));
+      .catch(getErrorResponse);
   }
 }
 
