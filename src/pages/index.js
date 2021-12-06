@@ -181,11 +181,13 @@ function renderProfileInfo(login, about, avatar) {
 }
 
 function renderPage() {
-  Promise.all(promisesData).then(([userData, cards]) => {
-    userInfo = userData;
-    renderProfileInfo(userData.name, userData.about, userData.avatar);
-    renderCards(cards, userData);
-  });
+  Promise.all(promisesData)
+    .then(([userData, cards]) => {
+      userInfo = userData;
+      renderProfileInfo(userData.name, userData.about, userData.avatar);
+      renderCards(cards, userData);
+    })
+    .catch(getErrorResponse);
 }
 
 popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
