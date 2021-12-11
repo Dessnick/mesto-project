@@ -6,9 +6,9 @@ import {
   promisesData,
   getErrorResponse,
   pushProfileData,
-  pushCardData,
   deleteCard,
   updateProfileAvatar,
+  api
 } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
@@ -87,7 +87,7 @@ function setSubmitPopupPlaceAdd(evt) {
     return;
   }
 
-  pushCardData(cardData)
+  api.pushCardData(cardData)
     .then((res) => {
       addPhotoCard([res, userInfo]);
       formPlaceAdd.reset();
