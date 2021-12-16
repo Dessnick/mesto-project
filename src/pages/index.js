@@ -1,5 +1,6 @@
 import './index.css';
-import { resetValidation, enableValidation } from '../components/validate.js';
+// import { resetValidation, enableValidation } from '../components/validate.js';
+import FormValidator from '../components/FormValidator.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
 import {
@@ -8,7 +9,7 @@ import {
   pushProfileData,
   deleteCard,
   updateProfileAvatar,
-  api
+  api,
 } from '../components/api.js';
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
@@ -87,7 +88,8 @@ function setSubmitPopupPlaceAdd(evt) {
     return;
   }
 
-  api.pushCardData(cardData)
+  api
+    .pushCardData(cardData)
     .then((res) => {
       addPhotoCard([res, userInfo]);
       formPlaceAdd.reset();
