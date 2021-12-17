@@ -1,6 +1,6 @@
 import './index.css';
-// import { resetValidation, enableValidation } from '../components/validate.js';
-import FormValidator from '../components/FormValidator.js';
+import { resetValidation, enableValidation } from '../components/validate.js';
+// import FormValidator from '../components/FormValidator.js';
 import { openPopup, closePopup } from '../components/modal.js';
 import { renderCards, addPhotoCard } from '../components/card.js';
 import {
