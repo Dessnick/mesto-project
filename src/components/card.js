@@ -89,7 +89,6 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
 // }
 
 function addPhotoCard(inputData) {
-  console.log(inputData);
   const card = new Card(inputData, '#card-template');
   const cardElement = card.generate();
   photoFeed.prepend(cardElement);
