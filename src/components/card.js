@@ -1,6 +1,7 @@
 import { openPopup } from './modal.js';
 import { getErrorResponse, pushLikeData, deleteLikeData } from './api.js';
-import { setOnClickCardDeleteButton } from '../pages/index.js';
+import { setOnClickCardDeleteButton, popupWithImage } from '../pages/index.js';
+export {popupImage};
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const popupImage = popupShowImage.querySelector('.popup__image');
@@ -89,7 +90,12 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
 // }
 
 function addPhotoCard(inputData) {
-  const card = new Card(inputData, '#card-template');
+  const card = new Card(inputData, {
+    selector: '#card-template',
+    handleCardClick: () => {
+      popupImage.open();
+    }
+  });
   const cardElement = card.generate();
   photoFeed.prepend(cardElement);
   // photoFeed.prepend(createPhotoCard(inputData));
@@ -105,7 +111,12 @@ function renderCards(cards, userData) {
       owner: element.owner,
     };
     const inputData = [cardData, userData];
-    const card = new Card(inputData, '#card-template');
+    const card = new Card(inputData, {
+      selector: '#card-template',
+      handleCardClick: () => {
+        popupImage.open();
+      }
+    });
     const cardElement = card.generate();
     photoFeed.append(cardElement);
     // photoFeed.append(createPhotoCard(inputData));
@@ -113,7 +124,7 @@ function renderCards(cards, userData) {
 }
 
 class Card {
-   constructor(inputData, selector) {
+   constructor(inputData, { selector, handleCardClick }) {
     const [cardData, userData] = inputData;
     this._selector = selector;
     this._src = cardData.link;
@@ -124,6 +135,7 @@ class Card {
     this._cardOwner = cardData.owner;
     this._userId = userData._id;
     this._cardLikes = cardData.likes;
+    this._handleCardClick = handleCardClick;
    }
    
    _getElement() {
@@ -167,8 +179,10 @@ class Card {
 
    _setEventListeners() {
     this._elementImage.addEventListener('click', () => {
-      openPopup(popupShowImage);
-      displayImage(this._cardData);
+      // openPopup(popupShowImage);
+     
+      popupWithImage.open(this._src);
+      // displayImage(this._cardData);
     })
     this._elementLikeButton.addEventListener('click', (evt) =>
       onClicklikeToggle(evt, this._cardData, this._elementLikeCounter),

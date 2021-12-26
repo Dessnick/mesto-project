@@ -6,11 +6,13 @@ import { renderCards, addPhotoCard } from '../components/card.js';
 import {
   promisesData,
   getErrorResponse,
-  pushProfileData,
   deleteCard,
-  updateProfileAvatar,
   api,
 } from '../components/api.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import Section from '../components/Section.js';
+export {popupWithImage};
 
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const formProfileEdit = popupProfileEdit.querySelector('.form-profile-edit');
@@ -52,66 +54,66 @@ let userInfo;
 let cardToDelete;
 let cardIdToDelete;
 
-function setSubmitPopupProfileEdit(evt) {
-  evt.preventDefault();
-  saveButtonProfileEdit.textContent = 'Сохраняем...';
+// function setSubmitPopupProfileEdit(evt) {
+//   evt.preventDefault();
+//   saveButtonProfileEdit.textContent = 'Сохраняем...';
 
-  const loginValue = loginInput.value;
-  const aboutValue = aboutInput.value;
+//   const loginValue = loginInput.value;
+//   const aboutValue = aboutInput.value;
 
-  if (!loginValue || !aboutValue) {
-    return;
-  }
+//   if (!loginValue || !aboutValue) {
+//     return;
+//   }
 
-  pushProfileData({ name: loginValue, about: aboutValue })
-    .then((res) => {
-      profileName.textContent = res.name;
-      profileCaption.textContent = res.about;
+//   pushProfileData({ name: loginValue, about: aboutValue })
+//     .then((res) => {
+//       profileName.textContent = res.name;
+//       profileCaption.textContent = res.about;
 
-      formProfileEdit.reset();
-      closePopup(popupProfileEdit);
-    })
-    .catch(getErrorResponse)
-    .finally(() => (saveButtonProfileEdit.textContent = 'Сохранить'));
-}
+//       formProfileEdit.reset();
+//       closePopup(popupProfileEdit);
+//     })
+//     .catch(getErrorResponse)
+//     .finally(() => (saveButtonProfileEdit.textContent = 'Сохранить'));
+// }
 
-function setSubmitPopupPlaceAdd(evt) {
-  evt.preventDefault();
-  saveButtonPlaceAdd.textContent = 'Добавляем...';
+// function setSubmitPopupPlaceAdd(evt) {
+//   evt.preventDefault();
+//   saveButtonPlaceAdd.textContent = 'Добавляем...';
 
-  const cardData = {
-    name: placeNameInput.value,
-    link: imageLinkInput.value,
-  };
+//   const cardData = {
+//     name: placeNameInput.value,
+//     link: imageLinkInput.value,
+//   };
 
-  if (!cardData.name || !cardData.link) {
-    return;
-  }
+//   if (!cardData.name || !cardData.link) {
+//     return;
+//   }
 
-  api
-    .pushCardData(cardData)
-    .then((res) => {
-      addPhotoCard([res, userInfo]);
-      formPlaceAdd.reset();
-      closePopup(popupPlaceAdd);
-    })
-    .catch(getErrorResponse)
-    .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
-}
+//   api
+//     .pushCardData(cardData)
+//     .then((res) => {
+//       addPhotoCard([res, userInfo]);
+//       formPlaceAdd.reset();
+//       closePopup(popupPlaceAdd);
+//     })
+//     .catch(getErrorResponse)
+//     .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
+// }
 
-function setSubmitPopupAvatarEdit(evt) {
-  evt.preventDefault();
-  saveButtonAvatarEdit.textContent = 'Сохраняем...';
+// function setSubmitPopupAvatarEdit(evt) {
+//   evt.preventDefault();
+//   saveButtonAvatarEdit.textContent = 'Сохраняем...';
 
-  updateProfileAvatar(avatarLinkInput.value)
-    .then((res) => {
-      profileAvatar.src = res.avatar;
-      formAvatarEdit.reset();
-      closePopup(popupAvatarEdit);
-    })
-    .catch(getErrorResponse)
-    .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
-}
+//   updateProfileAvatar(avatarLinkInput.value)
+//     .then((res) => {
+//       profileAvatar.src = res.avatar;
+//       formAvatarEdit.reset();
+//       closePopup(popupAvatarEdit);
+//     })
+//     .catch(getErrorResponse)
+//     .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
+// }
 
 function setSubmitPopupCardDelete(evt) {
   evt.preventDefault();
@@ -192,9 +194,10 @@ function renderPage() {
     .catch(getErrorResponse);
 }
 
-popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
-popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
-popupAvatarEdit.addEventListener('submit', setSubmitPopupAvatarEdit);
+
+// popupProfileEdit.addEventListener('submit', setSubmitPopupProfileEdit);
+// popupPlaceAdd.addEventListener('submit', setSubmitPopupPlaceAdd);
+// popupAvatarEdit.addEventListener('submit', setSubmitPopupAvatarEdit);
 popupCardDelete.addEventListener('submit', setSubmitPopupCardDelete);
 
 editButton.addEventListener('click', setOnCLickEditButton);
@@ -204,3 +207,76 @@ handleCloseButton();
 
 renderPage();
 enableValidation(validationSelectors);
+
+// const cardList = new Section({
+//   data: items,
+  
+// });
+//создаем объект для попапа с картинкой
+const popupWithImage = new PopupWithImage('.popup_type_show-image');
+popupWithImage.setEventListeners();
+
+//создаем объект для попапа добавления места
+const popupWithPlaceAdd = new PopupWithForm('.popup_type_place-add', {
+  handleFormSubmit: (inputValues) => {
+    saveButtonPlaceAdd.textContent = 'Добавляем...';
+
+  const cardData = {
+    name: inputValues["place-name"],
+    link: inputValues["image-link"],
+  };
+  
+  if (!cardData.name || !cardData.link) {
+    return;
+  }
+
+  api
+    .pushCardData(cardData)
+    .then((res) => {
+      addPhotoCard([res, userInfo]);
+    })
+    .catch(getErrorResponse)
+    .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
+  }
+});
+popupWithPlaceAdd.setEventListeners();
+
+//создаем объект для попапа профиля
+const popupWithProfile = new PopupWithForm('.popup_type_profile-edit', {
+  handleFormSubmit: (inputValues) => {
+    saveButtonProfileEdit.textContent = 'Сохраняем...';
+
+    const loginValue = inputValues.login;
+    const aboutValue = inputValues.about;
+
+    if (!loginValue || !aboutValue) {
+      return;
+    }
+    
+    api
+      .pushProfileData({ name: loginValue, about: aboutValue })
+      .then((res) => {
+        profileName.textContent = res.name;
+        profileCaption.textContent = res.about;
+      })
+      .catch(getErrorResponse)
+      .finally(() => (saveButtonProfileEdit.textContent = 'Сохранить'));
+    }
+});
+popupWithProfile.setEventListeners();
+
+//создаем объект для попапа аватара
+const popupWithAvatar = new PopupWithForm('.popup_type_avatar-edit', {
+  handleFormSubmit: (inputValues) => {
+    saveButtonAvatarEdit.textContent = 'Сохраняем...';
+    const linkAvatar = inputValues["avatar-link"];
+  api
+    .updateProfileAvatar(linkAvatar)
+    .then((res) => {
+      profileAvatar.src = res.avatar;
+    })
+    .catch(getErrorResponse)
+    .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
+  }
+});
+popupWithAvatar.setEventListeners();

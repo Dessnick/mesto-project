@@ -29,16 +29,16 @@ function getProfile() {
   }).then(getResponseResult);
 }
 
-function pushProfileData(data) {
-  return fetch(`${fetchInit.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: fetchInit.headers,
-    body: JSON.stringify({
-      name: data.name,
-      about: data.about,
-    }),
-  }).then(getResponseResult);
-}
+// function pushProfileData(data) {
+//   return fetch(`${fetchInit.baseUrl}/users/me`, {
+//     method: 'PATCH',
+//     headers: fetchInit.headers,
+//     body: JSON.stringify({
+//       name: data.name,
+//       about: data.about,
+//     }),
+//   }).then(getResponseResult);
+// }
 
 // function pushCardData(data) {
 //   return fetch(`${fetchInit.baseUrl}/cards`, {
@@ -72,13 +72,13 @@ function deleteCard(id) {
   }).then(getResponseResult);
 }
 
-function updateProfileAvatar(data) {
-  return fetch(`${fetchInit.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: fetchInit.headers,
-    body: JSON.stringify({ avatar: data }),
-  }).then(getResponseResult);
-}
+// function updateProfileAvatar(data) {
+//   return fetch(`${fetchInit.baseUrl}/users/me/avatar`, {
+//     method: 'PATCH',
+//     headers: fetchInit.headers,
+//     body: JSON.stringify({ avatar: data }),
+//   }).then(getResponseResult);
+// }
 
 const promisesData = [getProfile(), getCards()];
 
@@ -178,10 +178,8 @@ const api = new Api({
 export {
   promisesData,
   getErrorResponse,
-  pushProfileData,
   deleteCard,
   pushLikeData,
   deleteLikeData,
-  updateProfileAvatar,
   api
 };

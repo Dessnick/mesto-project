@@ -1,14 +1,14 @@
 import Popup from './Popup.js';
+import { popupImage } from './card.js';
 
 export default class PopupWithImage extends Popup {
-  constructor(data, selector) {
+  constructor(selector) {
     super(selector);
-    this._image = data.image;
   }
 
-  open() {
+  open(image) {
     super.open();
-    popupImage.src = this.image;
+    popupImage.src = image;
   }
 
   close() {
