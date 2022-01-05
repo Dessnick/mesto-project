@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(selectors, popupForm) {
     this._selectors = selectors;
     this._popupForm = popupForm;
@@ -64,19 +64,14 @@ class FormValidator {
         this._toggleButtonState();
       });
     });
-  }
 
-  resetValidation() {
-    this._inputList.forEach((inputElement) => {
-      this._hideInputError(inputElement);
+    this._popupForm.addEventListener('reset', () => {
+      this._inputList.forEach((inputElement) => this._hideInputError(inputElement));
+      this._toggleButtonState();
     });
-
-    this._toggleButtonState();
   }
 
   enableValidation() {
     this._setEventListeners();
   }
 }
-
-export default FormValidator;
