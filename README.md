@@ -43,3 +43,5 @@
 
 - [Семес Денис](https://github.com/Dessnick/) deccnick@yandex.ru
 - [Афанасьев Александр](https://github.com/AlexAfanasiev1980/) armawir1@mail.ru
+
+.
