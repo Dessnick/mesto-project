@@ -38,3 +38,10 @@
 - [Макет валидации полей и кнопок](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=0%3A1)
 - [Макет поведения кнопок при работе с сервером](https://www.figma.com/file/PSdQFRHoxXJFs2FH8IXViF/JavaScript-9-sprint?node-id=0%3A1)
 - [Ссылка GitHub Pages](https://dessnick.github.io/mesto-project/)
+
+**Авторы**
+
+- [Семес Денис](https://github.com/Dessnick/) deccnick@yandex.ru
+- [Афанасьев Александр](https://github.com/AlexAfanasiev1980/) armawir1@mail.ru
+
+.
