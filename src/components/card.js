@@ -1,20 +1,10 @@
-import { openPopup } from './modal.js';
-import { getErrorResponse } from './api.js';
 import { setOnClickCardDeleteButton, popupWithImage } from '../pages/index.js';
-import {api} from './api.js';
+import {api} from './Api.js';
 export {popupImage};
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const popupImage = popupShowImage.querySelector('.popup__image');
 const photoFeed = document.querySelector('.photo-feed__list');
-// const popupImageCaption = popupShowImage.querySelector('.popup__image-caption');
-
-// function displayImage(inputData) {
-//   popupImage.src = inputData.link;
-//   popupImage.alt = inputData.name;
-
-//   popupImageCaption.textContent = inputData.name;
-// }
 
 function onClicklikeToggle(evt, cardData, elementLikeCounter) {
   const cardId = cardData._id;
