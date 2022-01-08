@@ -1,7 +1,6 @@
 import {
-  getErrorResponse,
-  api,
-} from '../components/api.js';
+  api
+} from './Api.js';
 import {renderProfileInfo} from '../pages/index.js';
 
 export default class UserInfo {
