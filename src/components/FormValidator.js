@@ -55,9 +55,9 @@ export default class FormValidator {
   _setEventListeners() {
     this._popupForm.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._toggleButtonState();
     });
 
+    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(inputElement);
@@ -67,7 +67,7 @@ export default class FormValidator {
 
     this._popupForm.addEventListener('reset', () => {
       this._inputList.forEach((inputElement) => this._hideInputError(inputElement));
-      this._toggleButtonState();
+      setTimeout(() => this._toggleButtonState());
     });
   }
 
