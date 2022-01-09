@@ -4,7 +4,7 @@ import { popupClassList } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
 import { addPhotoCard } from '../components/Card.js';
-import { promisesData, api } from '../components/Api.js';
+import Api from '../components/Api.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
@@ -86,6 +86,16 @@ export function setOnClickCardDeleteButton(evt) {
   cardToDelete = evt.target.closest('.photo-feed__item');
   cardIdToDelete = cardToDelete.getAttribute('card-id');
 }
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
+  headers: {
+    authorization: '516b48a6-c50b-43c5-aac7-85b1d4cfb698',
+    'Content-Type': 'application/json',
+  },
+});
+
+const promisesData = [api.getProfile(), api.getCards()];
 
 //создаем объект для попапа с картинкой
 const popupWithImage = new PopupWithImage('.popup_type_show-image', popupClassList);

@@ -1,5 +1,5 @@
 import { setOnClickCardDeleteButton, popupWithImage } from '../pages/index.js';
-import { api } from './Api.js';
+import Api from './Api.js';
 // export { popupImage };
 
 const popupShowImage = document.querySelector('.popup_type_show-image');

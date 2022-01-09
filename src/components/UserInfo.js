@@ -1,7 +1,5 @@
-import {
-  api
-} from './Api.js';
-import {renderProfileInfo} from '../pages/index.js';
+import Api from './Api.js';
+import { renderProfileInfo } from '../pages/index.js';
 
 export default class UserInfo {
   constructor({ loginSelector, aboutSelector }) {
@@ -10,11 +8,12 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    api.getProfile()
-    .then((result) => {
-      renderProfileInfo(result);
-    })
-    .catch(api.getErrorResponse)
+    api
+      .getProfile()
+      .then((result) => {
+        renderProfileInfo(result);
+      })
+      .catch(api.getErrorResponse);
   }
 
   setUserInfo({ name, about }, saveButtonProfileEdit) {
