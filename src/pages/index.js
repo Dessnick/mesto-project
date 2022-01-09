@@ -1,6 +1,6 @@
 import './index.css';
 
-import { popupClassList } from '../utils/constants.js';
+import { popupClassList, userInfoClassList } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
 import { addPhotoCard } from '../components/Card.js';
@@ -48,7 +48,6 @@ const validationSelectors = {
   errorClass: 'popup__item-error_active',
 };
 
-let userInfo;
 let cardToDelete;
 let cardIdToDelete;
 
@@ -87,6 +86,12 @@ export function setOnClickCardDeleteButton(evt) {
   cardIdToDelete = cardToDelete.getAttribute('card-id');
 }
 
+let userInfo;
+
+function userWithInfo(userData) {
+  return new UserInfo(userData, userInfoClassList);
+}
+
 const api = new Api({
   baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
   headers: {
@@ -96,6 +101,18 @@ const api = new Api({
 });
 
 const promisesData = [api.getProfile(), api.getCards()];
+
+function renderPage() {
+  Promise.all(promisesData)
+    .then(([userData, cards]) => {
+      userInfo = userWithInfo(userData);
+      userInfo.setUserInfo(userData);
+      cardList.renderCards([userData, cards]);
+    })
+    .catch(api.getErrorResponse);
+}
+
+renderPage();
 
 //создаем объект для попапа с картинкой
 const popupWithImage = new PopupWithImage('.popup_type_show-image', popupClassList);
@@ -124,20 +141,9 @@ const cardList = new Section(
   '.photo-feed__list',
 );
 
-function renderPage() {
-  Promise.all(promisesData)
-    .then(([userData, cards]) => {
-      userInfo = userData;
-      cardList.renderCards([userData, cards]);
-    })
-    .catch(api.getErrorResponse);
-}
-
 editButton.addEventListener('click', setOnCLickEditButton);
 addButton.addEventListener('click', setOnClickAddButton);
 avatarButton.addEventListener('click', setOnClickEditAvatar);
-
-renderPage();
 
 //создаем объект для попапа добавления места
 const popupWithPlaceAdd = new PopupWithForm(
@@ -183,19 +189,6 @@ const popupWithAvatar = new PopupWithForm(
   },
 );
 popupWithAvatar.setEventListeners();
-
-const userWithInfo = new UserInfo({
-  loginSelector: '.profile__name',
-  aboutSelector: '.profile__caption',
-});
-
-userWithInfo.getUserInfo();
-
-export function renderProfileInfo(userInfo) {
-  profileName.textContent = userInfo.name;
-  profileCaption.textContent = userInfo.about;
-  profileAvatar.src = userInfo.avatar;
-}
 
 //создаем объект для попапа профиля
 const popupWithProfile = new PopupWithForm(

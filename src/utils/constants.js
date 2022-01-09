@@ -8,4 +8,10 @@ const popupClassList = {
   popupImageCaption: '.popup__image-caption',
 };
 
-export { popupClassList };
+const userInfoClassList = {
+  profileName: '.profile__name',
+  profileAbout: '.profile__caption',
+  profileAvatar: '.profile__avatar',
+};
+
+export { popupClassList, userInfoClassList };
