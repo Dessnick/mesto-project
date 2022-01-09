@@ -1,6 +1,6 @@
 import { setOnClickCardDeleteButton, popupWithImage } from '../pages/index.js';
-import {api} from './Api.js';
-export {popupImage};
+import { api } from './Api.js';
+// export { popupImage };
 
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const popupImage = popupShowImage.querySelector('.popup__image');
@@ -10,8 +10,8 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
   const cardId = cardData._id;
 
   if (evt.target.classList.contains('photo-card__like-button_active')) {
-    api. 
-    deleteLikeData(cardId)
+    api
+      .deleteLikeData(cardId)
       .then((res) => {
         evt.target.classList.toggle('photo-card__like-button_active');
 
@@ -20,8 +20,8 @@ function onClicklikeToggle(evt, cardData, elementLikeCounter) {
       })
       .catch(api.getErrorResponse);
   } else {
-    api.
-    pushLikeData(cardId)
+    api
+      .pushLikeData(cardId)
       .then((res) => {
         elementLikeCounter.textContent = res.likes.length;
         evt.target.classList.toggle('photo-card__like-button_active');
@@ -35,14 +35,14 @@ function addPhotoCard(inputData) {
     selector: '#card-template',
     handleCardClick: () => {
       popupImage.open();
-    }
+    },
   });
   const cardElement = card.generate();
   photoFeed.prepend(cardElement);
 }
 
 export default class Card {
-   constructor(inputData, { selector, handleCardClick }) {
+  constructor(inputData, { selector, handleCardClick }) {
     const [cardData, userData] = inputData;
     this._selector = selector;
     this._src = cardData.link;
@@ -54,18 +54,17 @@ export default class Card {
     this._userId = userData._id;
     this._cardLikes = cardData.likes;
     this._handleCardClick = handleCardClick;
-   }
-   
-   _getElement() {
+  }
+
+  _getElement() {
     const cardElement = document
       .querySelector(this._selector)
-      .content
-      .querySelector('.photo-feed__item')
+      .content.querySelector('.photo-feed__item')
       .cloneNode(true);
     return cardElement;
-   }
+  }
 
-   generate() {
+  generate() {
     this._element = this._getElement();
     this._elementImage = this._element.querySelector('.photo-card__image');
     this._elementLikeButton = this._element.querySelector('.photo-card__like-button');
@@ -78,27 +77,32 @@ export default class Card {
     this._elementImage.alt = this._name;
     this._element.querySelector('.photo-card__title').textContent = this._name;
     return this._element;
-   }
+  }
 
-   _showLikesData() {
+  _showLikesData() {
     const ownerLikes = this._cardLikes.filter((item) => item._id === this._userId);
     if (ownerLikes.length > 0) {
       this._elementLikeButton.classList.toggle('photo-card__like-button_active');
     }
     this._elementLikeCounter.textContent = !this._cardLikes.length ? '' : this._cardLikes.length;
-   }
+  }
 
-   _userIsOwner() {
+  _userIsOwner() {
     if (this._cardOwner._id !== this._userId) {
       return false;
     }
     return true;
-   }
+  }
 
-   _setEventListeners() {
-    this._elementImage.addEventListener('click', () => {     
-      popupWithImage.open(this._src);
-    })
+  _displayImage() {
+    this._handleCardClick(this._cardData);
+  }
+
+  _setEventListeners() {
+    this._elementImage.addEventListener('click', () => {
+      // popupWithImage.open(this._src);
+      this._displayImage();
+    });
 
     this._elementLikeButton.addEventListener('click', (evt) =>
       onClicklikeToggle(evt, this._cardData, this._elementLikeCounter),
@@ -109,7 +113,7 @@ export default class Card {
     } else {
       this._elementDeleteButton.parentNode.removeChild(this._elementDeleteButton);
     }
-   } 
+  }
 }
 
 export { addPhotoCard };

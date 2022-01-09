@@ -4,6 +4,8 @@ const popupClassList = {
   buttonSubmit: '.popup__button_type_submit',
   popupForm: '.popup__form',
   popupItem: '.popup__item',
+  popupImage: '.popup__image',
+  popupImageCaption: '.popup__image-caption',
 };
 
 export { popupClassList };

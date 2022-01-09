@@ -1,4 +1,7 @@
 import './index.css';
+
+import { popupClassList } from '../utils/constants.js';
+
 import FormValidator from '../components/FormValidator.js';
 import { addPhotoCard } from '../components/Card.js';
 import { promisesData, api } from '../components/Api.js';
@@ -84,13 +87,19 @@ export function setOnClickCardDeleteButton(evt) {
   cardIdToDelete = cardToDelete.getAttribute('card-id');
 }
 
+//создаем объект для попапа с картинкой
+const popupWithImage = new PopupWithImage('.popup_type_show-image', popupClassList);
+popupWithImage.setEventListeners();
+
+function handleCardClick(data) {
+  popupWithImage.open(data);
+}
+
 //Рефакторинг отрисовки карточек
 function createCard([item, userData]) {
   const card = new Card([item, userData], {
     selector: '#card-template',
-    handleCardClick: () => {
-      popupImage.open();
-    },
+    handleCardClick: handleCardClick,
   });
   const cardElement = card.generate();
   return cardElement;
@@ -107,11 +116,11 @@ const cardList = new Section(
 
 function renderPage() {
   Promise.all(promisesData)
-  .then(([userData, cards]) => {
-    userInfo = userData;
-    cardList.renderCards([userData, cards]);
-  })
-  .catch(api.getErrorResponse);
+    .then(([userData, cards]) => {
+      userInfo = userData;
+      cardList.renderCards([userData, cards]);
+    })
+    .catch(api.getErrorResponse);
 }
 
 editButton.addEventListener('click', setOnCLickEditButton);
@@ -120,13 +129,11 @@ avatarButton.addEventListener('click', setOnClickEditAvatar);
 
 renderPage();
 
-//создаем объект для попапа с картинкой
-const popupWithImage = new PopupWithImage('.popup_type_show-image');
-popupWithImage.setEventListeners();
-
 //создаем объект для попапа добавления места
-const popupWithPlaceAdd = new PopupWithForm('.popup_type_place-add', {
-  handleFormSubmit: (inputValues) => {
+const popupWithPlaceAdd = new PopupWithForm(
+  '.popup_type_place-add',
+  popupClassList,
+  (inputValues) => {
     saveButtonPlaceAdd.textContent = 'Добавляем...';
 
     const cardData = {
@@ -146,12 +153,14 @@ const popupWithPlaceAdd = new PopupWithForm('.popup_type_place-add', {
       .catch(api.getErrorResponse)
       .finally(() => (saveButtonPlaceAdd.textContent = 'Создать'));
   },
-});
+);
 popupWithPlaceAdd.setEventListeners();
 
 //создаем объект для попапа аватара
-const popupWithAvatar = new PopupWithForm('.popup_type_avatar-edit', {
-  handleFormSubmit: (inputValues) => {
+const popupWithAvatar = new PopupWithForm(
+  '.popup_type_avatar-edit',
+  popupClassList,
+  (inputValues) => {
     saveButtonAvatarEdit.textContent = 'Сохраняем...';
     const linkAvatar = inputValues['avatar-link'];
     api
@@ -162,7 +171,7 @@ const popupWithAvatar = new PopupWithForm('.popup_type_avatar-edit', {
       .catch(api.getErrorResponse)
       .finally(() => (saveButtonAvatarEdit.textContent = 'Сохранить'));
   },
-});
+);
 popupWithAvatar.setEventListeners();
 
 const userWithInfo = new UserInfo({
@@ -179,8 +188,10 @@ export function renderProfileInfo(userInfo) {
 }
 
 //создаем объект для попапа профиля
-const popupWithProfile = new PopupWithForm('.popup_type_profile-edit', {
-  handleFormSubmit: (inputValues) => {
+const popupWithProfile = new PopupWithForm(
+  '.popup_type_profile-edit',
+  popupClassList,
+  (inputValues) => {
     saveButtonProfileEdit.textContent = 'Сохраняем...';
 
     const loginValue = inputValues.login;
@@ -192,13 +203,15 @@ const popupWithProfile = new PopupWithForm('.popup_type_profile-edit', {
 
     userWithInfo.setUserInfo({ name: loginValue, about: aboutValue }, saveButtonProfileEdit);
   },
-});
+);
 
 popupWithProfile.setEventListeners();
 
 //создаем объект для попапа удаления карточки
-const popupWithCardDelete = new PopupWithForm('.popup_type_card-delete', {
-  handleFormSubmit: (inputValues) => {
+const popupWithCardDelete = new PopupWithForm(
+  '.popup_type_card-delete',
+  popupClassList,
+  (inputValues) => {
     saveButtonCardDelete.textContent = 'Удаляем...';
     api
       .deleteCard(cardIdToDelete)
@@ -208,7 +221,7 @@ const popupWithCardDelete = new PopupWithForm('.popup_type_card-delete', {
       .catch(api.getErrorResponse)
       .finally(() => (saveButtonCardDelete.textContent = 'Да'));
   },
-});
+);
 popupWithCardDelete.setEventListeners();
 
 // подключаем валидацию форм
