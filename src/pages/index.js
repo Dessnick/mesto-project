@@ -66,7 +66,7 @@ const popupWithAvatar = new PopupWithForm(
         popupWithAvatar.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithAvatar.renderLoading());
+      .finally(() => popupWithAvatar.renderLoading);
   },
 );
 popupWithAvatar.setEventListeners();
@@ -84,7 +84,7 @@ const popupWithProfile = new PopupWithForm(
         popupWithProfile.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithProfile.renderLoading());
+      .finally(() => popupWithProfile.renderLoading);
   },
 );
 popupWithProfile.setEventListeners();
