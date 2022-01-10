@@ -1,34 +1,6 @@
-import { setOnClickCardDeleteButton, popupWithImage } from '../pages/index.js';
-import Api from './Api.js';
-// export { popupImage };
-
 const popupShowImage = document.querySelector('.popup_type_show-image');
 const popupImage = popupShowImage.querySelector('.popup__image');
 const photoFeed = document.querySelector('.photo-feed__list');
-
-function onClicklikeToggle(evt, cardData, elementLikeCounter) {
-  const cardId = cardData._id;
-
-  if (evt.target.classList.contains('photo-card__like-button_active')) {
-    api
-      .deleteLikeData(cardId)
-      .then((res) => {
-        evt.target.classList.toggle('photo-card__like-button_active');
-
-        const likesCount = res.likes.length;
-        elementLikeCounter.textContent = likesCount > 0 ? likesCount : '';
-      })
-      .catch(api.getErrorResponse);
-  } else {
-    api
-      .pushLikeData(cardId)
-      .then((res) => {
-        elementLikeCounter.textContent = res.likes.length;
-        evt.target.classList.toggle('photo-card__like-button_active');
-      })
-      .catch(api.getErrorResponse);
-  }
-}
 
 function addPhotoCard(inputData) {
   const card = new Card(inputData, {
@@ -42,7 +14,7 @@ function addPhotoCard(inputData) {
 }
 
 export default class Card {
-  constructor(inputData, { selector, handleCardClick }) {
+  constructor(inputData, { selector, handleCardClick, handleCardDeleteButton, handleLikeToggle }) {
     const [cardData, userData] = inputData;
     this._selector = selector;
     this._src = cardData.link;
@@ -54,6 +26,8 @@ export default class Card {
     this._userId = userData._id;
     this._cardLikes = cardData.likes;
     this._handleCardClick = handleCardClick;
+    this._handleCardDeleteButton = handleCardDeleteButton;
+    this._handleLikeToggle = handleLikeToggle;
   }
 
   _getElement() {
@@ -100,16 +74,17 @@ export default class Card {
 
   _setEventListeners() {
     this._elementImage.addEventListener('click', () => {
-      // popupWithImage.open(this._src);
       this._displayImage();
     });
 
     this._elementLikeButton.addEventListener('click', (evt) =>
-      onClicklikeToggle(evt, this._cardData, this._elementLikeCounter),
+      this._handleLikeToggle(evt, this._cardData, this._elementLikeCounter),
     );
 
     if (this._userIsOwner()) {
-      this._elementDeleteButton.addEventListener('click', (evt) => setOnClickCardDeleteButton(evt));
+      this._elementDeleteButton.addEventListener('click', (evt) =>
+        this._handleCardDeleteButton(evt),
+      );
     } else {
       this._elementDeleteButton.parentNode.removeChild(this._elementDeleteButton);
     }

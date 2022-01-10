@@ -1,3 +1,15 @@
+const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
+const loginInput = popupProfileEdit.querySelector('#login-input');
+const aboutInput = popupProfileEdit.querySelector('#about-input');
+
+const likeActiveSelector = 'photo-card__like-button_active';
+
+const buttonTextLoading = {
+  placeAdd: 'Добавляем...',
+  cardDelete: 'Удаляем...',
+  saving: 'Сохраняем...',
+};
+
 const popupClassList = {
   popupOpened: 'popup_opened',
   buttonClose: '.popup__button_type_close',
@@ -14,4 +26,13 @@ const userInfoClassList = {
   profileAvatar: '.profile__avatar',
 };
 
-export { popupClassList, userInfoClassList };
+const cardClassList = {};
+
+export {
+  popupClassList,
+  userInfoClassList,
+  loginInput,
+  aboutInput,
+  likeActiveSelector,
+  buttonTextLoading,
+};

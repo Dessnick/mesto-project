@@ -39,8 +39,8 @@ export default class Api {
       'users/me',
       'PATCH',
       JSON.stringify({
-        name: data.name,
-        link: data.about,
+        name: data.login,
+        about: data.about,
       }),
     );
   }
