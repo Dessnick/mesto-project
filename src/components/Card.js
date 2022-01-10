@@ -73,8 +73,8 @@ export default class Card {
   }
 
   _setEventListeners() {
-    this._elementImage.addEventListener('click', () => {
-      this._displayImage();
+    this._elementImage.addEventListener('click', (evt) => {
+      this._handleCardClick(this._cardData);
     });
 
     this._elementLikeButton.addEventListener('click', (evt) =>
