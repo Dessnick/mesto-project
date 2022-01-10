@@ -66,7 +66,7 @@ const popupWithAvatar = new PopupWithForm(
         popupWithAvatar.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithAvatar.renderLoading(false, 'Сохранить'));
+      .finally(() => popupWithAvatar.renderLoading());
   },
 );
 popupWithAvatar.setEventListeners();
@@ -84,7 +84,7 @@ const popupWithProfile = new PopupWithForm(
         popupWithProfile.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithProfile.renderLoading(false, 'Сохранить'));
+      .finally(() => popupWithProfile.renderLoading());
   },
 );
 popupWithProfile.setEventListeners();
@@ -102,7 +102,7 @@ const popupWithCardDelete = new PopupWithForm(
         popupWithCardDelete.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithCardDelete.renderLoading(false, 'Да'));
+      .finally(() => popupWithCardDelete.renderLoading('Да'));
   },
 );
 popupWithCardDelete.setEventListeners();
@@ -188,7 +188,7 @@ const popupWithPlaceAdd = new PopupWithForm(
         popupWithPlaceAdd.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithPlaceAdd.renderLoading(false, 'Создать'));
+      .finally(() => popupWithPlaceAdd.renderLoading('Создать'));
   },
 );
 popupWithPlaceAdd.setEventListeners();
