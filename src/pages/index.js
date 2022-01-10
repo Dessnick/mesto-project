@@ -110,6 +110,7 @@ function renderPage() {
   .then(([userData, cards]) => {
     userInfo = userData;
     cardList.renderCards([userData, cards]);
+
   })
   .catch(api.getErrorResponse);
 }
