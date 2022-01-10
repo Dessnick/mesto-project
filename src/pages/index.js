@@ -6,6 +6,7 @@ import {
   likeActiveSelector,
   popupClassList,
   userInfoClassList,
+  popupButtons,
   buttonTextLoading,
 } from '../utils/constants.js';
 
@@ -17,10 +18,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
-
-const avatarButton = document.querySelector('.profile__button_type_avatar');
-const editButton = document.querySelector('.profile__button_type_edit');
-const addButton = document.querySelector('.profile__button_type_add');
 
 const validationSelectors = {
   formSelector: '.popup__form',
@@ -196,9 +193,9 @@ const popupWithPlaceAdd = new PopupWithForm(
 );
 popupWithPlaceAdd.setEventListeners();
 
-editButton.addEventListener('click', setOnCLickEditButton);
-addButton.addEventListener('click', setOnClickAddButton);
-avatarButton.addEventListener('click', setOnClickEditAvatar);
+popupButtons.editButton.addEventListener('click', setOnCLickEditButton);
+popupButtons.addButton.addEventListener('click', setOnClickAddButton);
+popupButtons.avatarButton.addEventListener('click', setOnClickEditAvatar);
 
 // подключаем валидацию форм
 const forms = Array.from(document.querySelectorAll('.popup__form'));

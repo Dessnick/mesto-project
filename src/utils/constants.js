@@ -4,6 +4,12 @@ const aboutInput = popupProfileEdit.querySelector('#about-input');
 
 const likeActiveSelector = 'photo-card__like-button_active';
 
+const popupButtons = {
+  avatarButton: document.querySelector('.profile__button_type_avatar'),
+  editButton: document.querySelector('.profile__button_type_edit'),
+  addButton: document.querySelector('.profile__button_type_add'),
+};
+
 const buttonTextLoading = {
   placeAdd: 'Добавляем...',
   cardDelete: 'Удаляем...',
@@ -34,5 +40,6 @@ export {
   loginInput,
   aboutInput,
   likeActiveSelector,
+  popupButtons,
   buttonTextLoading,
 };
