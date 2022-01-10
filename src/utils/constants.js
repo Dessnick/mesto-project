@@ -1,10 +1,11 @@
+const photoFeed = document.querySelector('.photo-feed__list');
+const popupForms = document.querySelectorAll('.popup__form');
+
 const popupProfileEdit = document.querySelector('.popup_type_profile-edit');
 const loginInput = popupProfileEdit.querySelector('#login-input');
 const aboutInput = popupProfileEdit.querySelector('#about-input');
 
 const likeActiveSelector = 'photo-card__like-button_active';
-
-const photoFeed = document.querySelector('.photo-feed__list');
 
 const popupButtons = {
   avatarButton: document.querySelector('.profile__button_type_avatar'),
@@ -34,9 +35,28 @@ const userInfoClassList = {
   profileAvatar: '.profile__avatar',
 };
 
-const cardClassList = {};
+const cardClassList = {
+  photoFeedItem: '.photo-feed__item',
+  cardTitle: '.photo-card__title',
+  cardImage: '.photo-card__image',
+  cardLikeButton: '.photo-card__like-button',
+  cardLikeCounter: '.photo-card__like-counter',
+  cardDeleteButton: '.photo-card__delete-button',
+  likeActiveSelector: likeActiveSelector,
+};
+
+const validationSelectors = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__item',
+  submitButtonSelector: '.popup__button_type_submit',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__item_type_error',
+  errorClass: 'popup__item-error_active',
+};
 
 export {
+  popupForms,
+  photoFeed,
   popupClassList,
   userInfoClassList,
   loginInput,
@@ -44,5 +64,6 @@ export {
   likeActiveSelector,
   popupButtons,
   buttonTextLoading,
-  photoFeed
+  cardClassList,
+  validationSelectors,
 };

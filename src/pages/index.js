@@ -1,6 +1,8 @@
 import './index.css';
 
 import {
+  popupForms,
+  photoFeed,
   aboutInput,
   loginInput,
   likeActiveSelector,
@@ -8,7 +10,8 @@ import {
   userInfoClassList,
   popupButtons,
   buttonTextLoading,
-  photoFeed
+  cardClassList,
+  validationSelectors,
 } from '../utils/constants.js';
 
 import FormValidator from '../components/FormValidator.js';
@@ -18,15 +21,6 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import Section from '../components/Section.js';
 import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
-
-const validationSelectors = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__item',
-  submitButtonSelector: '.popup__button_type_submit',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__item-error_active',
-};
 
 let cardToDelete;
 let cardIdToDelete;
@@ -146,25 +140,31 @@ function handleLikeToggle(evt, cardData, elementLikeCounter) {
 }
 
 //Рефакторинг отрисовки карточек
-function createCard([item, userData]) {
-  const card = new Card([item, userData], {
-    selector: '#card-template',
+function createCard(inputData) {
+  const card = new Card(inputData, {
+    cardSelector: '#card-template',
+    cardClassList,
     handleCardClick: handleCardClick,
     handleCardDeleteButton: handleCardDeleteButton,
     handleLikeToggle: handleLikeToggle,
   });
-  const cardElement = card.generate();
-  return cardElement;
+
+  return card.generate();
 }
 
-const cardList = new Section(
+const cardsList = new Section(
   {
     renderer: ([item, userData]) => {
-      cardList.addItem(createCard([item, userData]));
+      cardsList.addItem(createCard([item, userData]));
     },
   },
   '.photo-feed__list',
 );
+
+function addPhotoCard(inputData) {
+  const cardElement = createCard(inputData);
+  photoFeed.prepend(cardElement);
+}
 
 //создаем объект для попапа добавления места
 const popupWithPlaceAdd = new PopupWithForm(
@@ -184,7 +184,6 @@ const popupWithPlaceAdd = new PopupWithForm(
     api
       .pushCardData(cardData)
       .then((res) => {
-        console.log(res);
         addPhotoCard([res, userInfo]);
         popupWithPlaceAdd.close();
       })
@@ -194,24 +193,13 @@ const popupWithPlaceAdd = new PopupWithForm(
 );
 popupWithPlaceAdd.setEventListeners();
 
-function addPhotoCard(inputData) {
-  const card = new Card(inputData, {
-    selector: '#card-template',
-    handleCardClick: handleCardClick,
-    handleCardDeleteButton: handleCardDeleteButton,
-    handleLikeToggle: handleLikeToggle,
-  });
-  const cardElement = card.generate();
-  photoFeed.prepend(cardElement);
-}
-
 popupButtons.editButton.addEventListener('click', setOnCLickEditButton);
 popupButtons.addButton.addEventListener('click', setOnClickAddButton);
 popupButtons.avatarButton.addEventListener('click', setOnClickEditAvatar);
 
 // подключаем валидацию форм
-const forms = Array.from(document.querySelectorAll('.popup__form'));
-forms.forEach((form) => {
+const formsArr = Array.from(popupForms);
+formsArr.forEach((form) => {
   const formValidation = new FormValidator(validationSelectors, form);
   formValidation.enableValidation();
 });
@@ -231,7 +219,7 @@ function renderPage() {
     .then(([userData, cards]) => {
       userInfo = userWithInfo(userData);
       userInfo.setUserInfo(userData);
-      cardList.renderCards([userData, cards]);
+      cardsList.renderCards([userData, cards]);
     })
     .catch(api.getErrorResponse);
 }
