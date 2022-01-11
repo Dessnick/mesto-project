@@ -15,7 +15,6 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._handleCardDeleteButton = handleCardDeleteButton;
     this._handleLikeToggle = handleLikeToggle;
-
     this._cardSelector = cardSelector;
     this._photoFeedItem = cardClassList.photoFeedItem;
     this._cardTitle = cardClassList.cardTitle;
@@ -59,6 +58,7 @@ export default class Card {
 
   _userIsOwner() {
     if (this._cardOwner._id !== this._userId) {
+      
       return false;
     }
     return true;

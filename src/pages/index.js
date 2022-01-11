@@ -184,7 +184,7 @@ const popupWithPlaceAdd = new PopupWithForm(
     api
       .pushCardData(cardData)
       .then((res) => {
-        addPhotoCard([res, userInfo]);
+        addPhotoCard([res, data]);
         popupWithPlaceAdd.close();
       })
       .catch(api.getErrorResponse)
