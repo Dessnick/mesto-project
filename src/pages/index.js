@@ -26,11 +26,11 @@ let cardToDelete;
 let cardIdToDelete;
 
 let userInfo;
+let data;
 
 function setOnCLickEditButton() {
-  const userData = userInfo.getUserInfo();
-  loginInput.value = userData.name;
-  aboutInput.value = userData.about;
+  loginInput.value = data.name;
+  aboutInput.value = data.about;
 
   popupWithProfile.open();
 }
@@ -43,8 +43,8 @@ function setOnClickEditAvatar() {
   popupWithAvatar.open();
 }
 
-function userWithInfo(userData) {
-  return new UserInfo(userData, userInfoClassList);
+function userWithInfo() {
+  return new UserInfo(userInfoClassList);
 }
 
 //создаем объект для попапа аватара
@@ -60,7 +60,7 @@ const popupWithAvatar = new PopupWithForm(
         popupWithAvatar.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithAvatar.renderLoading);
+      .finally(() => popupWithAvatar.renderLoading());
   },
 );
 popupWithAvatar.setEventListeners();
@@ -75,10 +75,11 @@ const popupWithProfile = new PopupWithForm(
       .pushProfileData(inputValues)
       .then((res) => {
         userInfo.setUserInfo(res);
+        data = userInfo.getUserInfo(res);
         popupWithProfile.close();
       })
       .catch(api.getErrorResponse)
-      .finally(() => popupWithProfile.renderLoading);
+      .finally(() => popupWithProfile.renderLoading());
   },
 );
 popupWithProfile.setEventListeners();
@@ -148,7 +149,6 @@ function createCard(inputData) {
     handleCardDeleteButton: handleCardDeleteButton,
     handleLikeToggle: handleLikeToggle,
   });
-
   return card.generate();
 }
 
@@ -217,8 +217,13 @@ const promisesData = [api.getProfile(), api.getCards()];
 function renderPage() {
   Promise.all(promisesData)
     .then(([userData, cards]) => {
-      userInfo = userWithInfo(userData);
-      userInfo.setUserInfo(userData);
+      // userInfo = userWithInfo(userData);
+      userInfo = userWithInfo();
+      data = userInfo.getUserInfo(userData);
+      document.querySelector(userInfoClassList.profileName).textContent = data.name;
+      document.querySelector(userInfoClassList.profileAbout).textContent = data.about;
+      document.querySelector(userInfoClassList.profileAvatar).src = data.avatar;
+      // userInfo.setUserInfo(userData);
       cardsList.renderCards([userData, cards]);
     })
     .catch(api.getErrorResponse);

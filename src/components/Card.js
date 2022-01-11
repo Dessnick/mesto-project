@@ -4,7 +4,6 @@ export default class Card {
     { cardSelector, cardClassList, handleCardClick, handleCardDeleteButton, handleLikeToggle },
   ) {
     const [cardData, userData] = inputData;
-
     this._src = cardData.link;
     this._name = cardData.name;
     this._cardId = cardData._id;
