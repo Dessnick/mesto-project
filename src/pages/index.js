@@ -25,14 +25,15 @@ import Card from '../components/Card.js';
 let cardToDelete;
 let cardIdToDelete;
 
-const userInfo = new UserInfo(userInfoClassList);
+let userInfo;
+let data;
 
 function setOnCLickEditButton() {
-  const userData = userInfo.getUserInfo();
-  loginInput.value = userData.name;
-  aboutInput.value = userData.about;
+  loginInput.value = data.name;
+  aboutInput.value = data.about;
 
-  popupWithProfile.open();
+  resetValidation(inputList, formProfileEdit, validationSelectors);
+  openPopup(popupProfileEdit);
 }
 
 function setOnClickAddButton() {
@@ -41,6 +42,10 @@ function setOnClickAddButton() {
 
 function setOnClickEditAvatar() {
   popupWithAvatar.open();
+}
+
+function userWithInfo() {
+  return new UserInfo(userInfoClassList);
 }
 
 //создаем объект для попапа аватара
@@ -71,6 +76,7 @@ const popupWithProfile = new PopupWithForm(
       .pushProfileData(inputValues)
       .then((res) => {
         userInfo.setUserInfo(res);
+        data = userInfo.getUserInfo(res);
         popupWithProfile.close();
       })
       .catch(api.getErrorResponse)
@@ -179,7 +185,7 @@ const popupWithPlaceAdd = new PopupWithForm(
     api
       .pushCardData(cardData)
       .then((res) => {
-        addPhotoCard([res, userInfo]);
+        addPhotoCard([res, data]);
         popupWithPlaceAdd.close();
       })
       .catch(api.getErrorResponse)
@@ -212,7 +218,13 @@ const promisesData = [api.getProfile(), api.getCards()];
 function renderPage() {
   Promise.all(promisesData)
     .then(([userData, cards]) => {
-      userInfo.setUserInfo(userData);
+      // userInfo = userWithInfo(userData);
+      userInfo = userWithInfo();
+      data = userInfo.getUserInfo(userData);
+      document.querySelector(userInfoClassList.profileName).textContent = data.name;
+      document.querySelector(userInfoClassList.profileAbout).textContent = data.about;
+      document.querySelector(userInfoClassList.profileAvatar).src = data.avatar;
+      // userInfo.setUserInfo(userData);
       cardsList.renderCards([userData, cards]);
     })
     .catch(api.getErrorResponse);
